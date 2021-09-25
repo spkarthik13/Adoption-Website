@@ -5,6 +5,10 @@
     text-decoration: none;
 }
 
+body {
+    background-color: #101010e1;
+}
+
 .icon {
     float: left;
     margin-top: 10px;

@@ -14,9 +14,8 @@ app.set('view engine', 'ejs');
 app.use(express.urlencoded({extended: true}), express.json());
 
 const homepageRoute = require('./controller/homepage_route');
+const loginErrorRoute = require('./controller/loginError_route');
 app.use(express.static('public'));
-app.use(homepageRoute);
+app.use(homepageRoute, loginErrorRoute);
 
 app.listen(process.env.PORT || 3000, () => (console.log(`Server listening on port ${process.env.PORT}.`)));
-
-// test
