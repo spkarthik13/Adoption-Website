@@ -20,6 +20,12 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
+    address: {
+        type: String,
+    },
+    gender: {
+        type:String,
+    }
 }, {timestamps: true});
 
 const Users = mongoose.model('Users', userSchema);

@@ -5,16 +5,12 @@ const router = express.Router();
 const Users = require('../models/registration');
 
 router.get('/', (req, res) => {
-    if (req.session.isLoggedIn) { // If user has logged in, render page with username.
-        res.render(path.resolve('./views/homepage.ejs'), {name: req.session.username});
-    } else {
-        res.render(path.resolve('./views/homepage.ejs'), {name: undefined});
-    }
+    res.render(path.resolve('./views/homepage.ejs'), {name: undefined});
 });
 
 // Two below routes are on the homepage, but are more suited to a login route. Could possibly break these two routes into their own file.
 router.post('/newUser', async (req, res) => {
-    const {fullName, email, password, phNumber} = req.body;
+    const {fullName, email, password, phNumber, gender, address} = req.body;
     let newUser = await Users.findOne({email});
     if (newUser) {
         console.log("User already exists in database.");
@@ -25,6 +21,8 @@ router.post('/newUser', async (req, res) => {
         email: email,
         phoneNumber: phNumber,
         password: password,
+        gender: gender,
+        address: address
     });
     newUser.save()
         .then((result) => {
@@ -42,8 +40,11 @@ router.post('/loginUser', async (req, res) => {
     if (loginUser && loginUser.password === password) {
         console.log(`User ${loginUser.fullName} has successfully logged in.`);
         req.session.isLoggedIn = true;
+
+        // TODO: Look into better way to pass user identifying information then appending it to session.
         req.session.username = loginUser.fullName;
-        res.redirect('/');
+        req.session.email = loginUser.email;
+        res.render(path.resolve('./views/homepage.ejs'), {name: req.session.username});
     } else  {
         res.redirect('/loginError');
     }
