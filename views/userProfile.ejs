@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="userProfileStyle.css">
+    <link rel="stylesheet" href="/userProfileStyle.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Sawarabi+Gothic&display=swap" rel="stylesheet">
@@ -17,20 +17,20 @@
 
     <div class="header">
         <a href="/">
-            <img class="icon" src="cat_icon.png" alt="Image unavailable.">
-            <img class="icon" src="dog_icon.png" alt="Image unavailable.">
+            <img class="icon" src="/cat_icon.png" alt="Image unavailable.">
+            <img class="icon" src="/dog_icon.png" alt="Image unavailable.">
         </a>
         <div class="inner-header">
             <div class="header_container"> 
                 <h1>Aaron's Adoptions</h1> 
                 <ul class="navigation">
-                <% if (name === undefined) { %>
+                <% if (user === undefined) { %>
                     <a><li><button id="ourAnimalsButton" type="button" class="btn btn-outline" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Please login to view our animals!">Our Animals</button></li></a>
                 <% } else { %>
                     <a><li><button id="ourAnimalsButton" type="button" class="btn btn-outline">Our Animals</button></li></a>
                 <% } %>
-                <% if (name) { %>
-                    <a><li><button id="namePlate" type="button" class="btn btn-outline"> <%= name %> </button></li></a>
+                <% if (user) { %>
+                    <a><li><button id="namePlate" type="button" class="btn btn-outline"> <%= user.fullName %> </button></li></a>
                 <% } else { %>
                     <a><li><button id="registerLoginButton" type="button" class="btn btn-outline">Register / Login</button></li></a>
                 <% } %>
@@ -43,22 +43,22 @@
 
     <div class="userProfileContainer">
         <p id="userProfileTitle">Below is your current user information, you may update it as you please.</p>
-        <form action="/userProfile" method="post">
+        <form action="/userProfile/edit/<%= user._id %>" method="POST">
             <ul class="list-group">
                 <li class="list-group-item">Full Name: 
                     <div class="form-floating mb-3"><input type="text" class="form-control" name="fullName" id="fullNameBox" placeholder="<%= user.fullName %>"></div>
                 </li>
                 <li class="list-group-item">Address:
-                    <div class="form-floating mb-3"><input type="text" class="form-control" id="addressBox" placeholder="<%= user.address %>"></div>
+                    <div class="form-floating mb-3"><input type="text" class="form-control" name="address" id="addressBox" placeholder="<%= user.address %>"></div>
                 </li>
                 <li class="list-group-item">Phone Number:
-                    <div class="form-floating mb-3"><input type="number" class="form-control" id="" placeholder="<%= user.phoneNumber %>"></div>
+                    <div class="form-floating mb-3"><input type="number" class="form-control" name="phoneNumber" id="" placeholder="<%= user.phoneNumber %>"></div>
                 </li>
                 <li class="list-group-item">Email: 
-                    <div class="form-floating mb-3"><input type="email" class="form-control" id="floatingInput" placeholder="<%= user.email %>"></div>
+                    <div class="form-floating mb-3"><input type="email" class="form-control" name="email" id="floatingInput" placeholder="<%= user.email %>" disabled></div>
                 </li>
                 <li class="list-group-item">Gender:
-                    <div class="form-floating mb-3"><input type="email" class="form-control" id="floatingInput" placeholder="<%= user.gender %>"></div>
+                    <div class="form-floating mb-3"><input type="text" class="form-control" name="gender" id="floatingInput" placeholder="<%= user.gender %>"></div>
                 </li>
                 <li class="list-group-item">
                     <button type="submit" class="btn btn-secondary btn-lg btn-block">Submit</button>

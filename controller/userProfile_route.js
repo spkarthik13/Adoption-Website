@@ -4,22 +4,30 @@ const express = require('express');
 const router = express.Router();
 const Users = require('../models/registration');
 
-// TODO: Research how to do a proper PUT request to let the user update this info, have no yet done PUT until this point.
+router.get('/userProfile/:id', async (req, res) => {
+    let User = await Users.findById(req.params.id);
+    res.render(path.resolve('./views/userProfile.ejs'), {user: User});
+});
 
-router.get('/userProfile', async (req, res) => {
-    let userEmail = req.session.email;
-    let User = await Users.findOne({userEmail});
+// Update route.
+router.post('/userProfile/edit/:id', (req, res) => {
+    let User = {
+        fullName: req.body.fullName,
+        email: req.body.email,
+        phoneNumber: req.body.phoneNumber,
+        password: req.body.password,
+        address: req.body.address,
+        gender: req.body.gender
+    };
 
-    // TODO, maybe break out of function and declare as a JS Object.
-    let userInfo = {
-        fullName: User.fullName,
-        email: User.email, 
-        phoneNumber: User.phoneNumber,
-        password: User.password,
-        address: User.address,
-        gender: User.gender,
-    }
-    res.render(path.resolve('./views/userProfile.ejs'), {name: req.session.username, user: userInfo});
+    Users.findByIdAndUpdate({_id:req.params.id}, User, (error) => {
+        if (error) {
+            console.log(error);
+        } else {
+            console.log('User successfully updated.');
+            res.redirect('/');
+        }
+    });
 });
 
 module.exports = router;

@@ -24,13 +24,13 @@
             <div class="header_container"> 
                 <h1>Aaron's Adoptions</h1> 
                 <ul class="navigation">
-                <% if (name === undefined) { %>
+                <% if (user === undefined) { %>
                     <a><li><button id="ourAnimalsButton" type="button" class="btn btn-outline" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Please login to view our animals!">Our Animals</button></li></a>
                 <% } else { %>
                     <a><li><button id="ourAnimalsButton" type="button" class="btn btn-outline">Our Animals</button></li></a>
                 <% } %>
-                <% if (name) { %>
-                    <a href="/userProfile"><li><button id="namePlate" type="button" class="btn btn-outline"> <%= name %> </button></li></a>
+                <% if (user) { %>
+                    <a href="/userProfile/<%= user._id %>"><li><button id="namePlate" type="button" class="btn btn-outline"> <%= user.fullName %> </button></li></a>
                 <% } else { %>
                     <a><li><button id="registerLoginButton" type="button" class="btn btn-outline">Register / Login</button></li></a>
                 <% } %>
