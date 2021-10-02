@@ -10,8 +10,8 @@ const sessionStore = new MongoDBSession({
 
 router.use(session({
     secret: "example",
-    resave: false,
-    saveUninitialized: true,
+    resave: true,
+    saveUninitialized: false,
     store: sessionStore,
 }));
 

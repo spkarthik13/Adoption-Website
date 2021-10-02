@@ -5,7 +5,11 @@ const router = express.Router();
 const Users = require('../models/registration');
 
 router.get('/', (req, res) => {
-    res.render(path.resolve('./views/homepage.ejs'), {user: undefined});
+    if (req.session.user) {
+        res.render(path.resolve('./views/homepage.ejs'), {user: req.session.user});
+    } else {
+        res.render(path.resolve('./views/homepage.ejs'), {user: undefined});
+    }
 });
 
 // Two below routes are on the homepage, but are more suited to a login route. Could possibly break these two routes into their own file.
@@ -39,7 +43,8 @@ router.post('/loginUser', async (req, res) => {
     let User = await Users.findOne({email});
     if (User && User.password === password) {
         console.log(`User ${User.fullName} has successfully logged in.`);
-        res.render(path.resolve('./views/homepage.ejs'), {user: User});
+        req.session.user = User;
+        res.render(path.resolve('./views/homepage.ejs'), {user: req.session.user});
     } else  {
         res.redirect('/loginError');
     }
