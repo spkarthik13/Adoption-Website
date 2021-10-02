@@ -11,6 +11,8 @@ router.get('/userProfile/:id', async (req, res) => {
 
 // Update route.
 router.post('/userProfile/edit/:id', (req, res) => {
+
+    // TODO: Set parameters so users cannot update fields to unrelated formats (empty fields, etc).
     let User = {
         fullName: req.body.fullName,
         email: req.body.email,

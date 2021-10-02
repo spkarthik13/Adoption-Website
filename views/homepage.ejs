@@ -36,6 +36,9 @@
                 <% } %>
                 <a><li><button type="button" class="btn btn-outline">Contact Us</button></li></a>
                 <a><li><button type="button" class="btn btn-outline">About Us</button></li></a>
+                <% if (user) { %>
+                    <a><li><form action="/logout" method='POST'><button id="namePlate" type="submit" class="btn btn-outline"></form> Logout </button></li></a>
+                <% } %>
                 </ul>
             </div>
         </div>

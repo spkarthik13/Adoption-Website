@@ -9,7 +9,7 @@ const sessionStore = new MongoDBSession({
 });
 
 router.use(session({
-    secret: "example",
+    secret: process.env.SESSION_SECRET,
     resave: true,
     saveUninitialized: false,
     store: sessionStore,

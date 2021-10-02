@@ -48,6 +48,17 @@ router.post('/loginUser', async (req, res) => {
     } else  {
         res.redirect('/loginError');
     }
-})
+});
+
+router.post('/logout', (req, res) => {
+    req.session.destroy(err => {
+        if (err) {
+            console.log(err);
+        }
+    });
+
+    res.clearCookie(process.env.SESSION_SECRET);
+    res.redirect('/');
+});
 
 module.exports = router;
