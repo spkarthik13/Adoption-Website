@@ -4,9 +4,8 @@ const express = require('express');
 const router = express.Router();
 const Users = require('../models/registration');
 
-router.get('/userProfile/:id', async (req, res) => {
-    let User = await Users.findById(req.params.id);
-    res.render(path.resolve('./views/userProfile.ejs'), {user: User});
+router.get('/userProfile/:id', (req, res) => {
+    res.render(path.resolve('./views/userProfile.ejs'), {user: req.session.user});
 });
 
 // Update route.

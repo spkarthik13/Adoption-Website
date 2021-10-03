@@ -22,14 +22,13 @@ body {
     height: 100px;
     display: block;
     background-color: #101010e1;
+    text-align: center;
 }
 
 .inner-header {
-    width: 80%;
+    text-align: center;
     height: 100%;
-    display: block;
-    float:right;
-    margin: auto;
+    display: inline-block;
 }
 
 .header_container {
@@ -45,12 +44,12 @@ body {
     vertical-align: middle;
     font-family: 'Sawarabi Gothic', sans-serif;
     font-size: 30px;
-    padding-left: 350px;
 }
 
 .navigation {
-    padding-left: 350px;
+    display: flex;
     height: 100%;
+    float:right;
 }
 
 .navigation a{
