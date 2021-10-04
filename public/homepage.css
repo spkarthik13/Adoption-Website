@@ -74,3 +74,11 @@ body {
     color:#101010e1;
     border-color: white;
 }
+
+#adminPanel {
+    display: block;
+    width:fit-content;
+    background-color:floralwhite;
+    margin: 0 auto;
+    margin-top: 1%;
+}

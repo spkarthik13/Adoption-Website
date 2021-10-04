@@ -8,7 +8,22 @@
     <title>Aaron's Adoption</title>
 </head>
 <body>
-    
 
-
+    <% if (user.isAdmin) { %>
+        <div id="adminPanel" class="alert alert-secondary" role="alert">
+            Admin Actions:
+            <span id="panelButtons">
+                <a href="/addBlogPost"><button type="button" class="btn btn-primary">Front Page Post</button></a>
+                <button type="button" class="btn btn-primary">Check Adoption Requests</button>
+                <button type="button" class="btn btn-primary">Manage User Privileges</button>
+            </span>
+        </div>
+    <% } else if (user.isModerator) { %>
+        <div id="adminPanel" class="alert alert-secondary" role="alert">
+            Admin Actions:
+            <span id="panelButtons">
+                <button type="button" class="btn btn-primary">Add a Front Page Post</button>
+                <button type="button" class="btn btn-primary">Check Adoption Requests</button>
+    <% } %>
+</body>
 </html>

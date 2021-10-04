@@ -1,0 +1,27 @@
+#formBackground {
+    background-color: honeydew;
+    width: 50%;
+    margin: auto;
+    margin-top: 1%;
+    border-radius: 25px;
+}
+
+.mb-3 {
+    width: 80%;
+    margin: auto;
+}
+
+#formContents {
+    padding-top: 2%;
+    padding-bottom: 2%;
+    margin: auto;
+}
+
+#fileInputArea {
+    padding-top: 2%;
+}
+
+#submitButton {
+    width: 50%;
+    margin-left: 25%;
+}

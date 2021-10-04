@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="homepage.css">
+    <link rel="stylesheet" href="addBlogStyle.css">
+    
+    <title>Add Blog Post</title>
+</head>
+<body>
+
+        <div id="formBackground">
+            <div id="formContents">
+                <form action="/addBlogPost" method="POST">
+                    <div class="mb-3">
+                        <label for="titleInput" class="form-label">Blog Title</label>
+                        <input type="text" class="form-control" id="titleInput" placeholder="Title" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="textareaInput" class="form-label">Blog Text</label>
+                        <textarea class="form-control" id="textareaInput" rows="3" required></textarea>
+                    </div>
+                    <div class="input-group mb-3" id="fileInputArea">
+                        <input type="file" class="form-control" id="inputGroupFile03" aria-describedby="inputGroupFileAddon03" aria-label="Upload">
+                    </div>
+
+                    <hr>
+                    <button id="submitButton" type="button" class="btn btn-primary">Submit Blog Post</button>
+                </form>
+            </div>
+        </div>
+</body>
+</html>
