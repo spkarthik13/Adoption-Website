@@ -23,7 +23,7 @@
                         <textarea class="form-control" id="textareaInput" rows="3" required></textarea>
                     </div>
                     <div class="input-group mb-3" id="fileInputArea">
-                        <input type="file" class="form-control" id="inputGroupFile03" aria-describedby="inputGroupFileAddon03" aria-label="Upload">
+                        <input type="file" class="form-control" id="inputGroupFile03" aria-describedby="inputGroupFileAddon03" aria-label="Upload" oninput="addInputArea()">
                     </div>
 
                     <hr>
@@ -32,4 +32,14 @@
             </div>
         </div>
 </body>
+
 </html>
+
+
+<script>
+    function addInputArea() {
+        $('#fileInputArea').append(
+            '<input type="file" class="form-control" id="inputGroupFile03" aria-describedby="inputGroupFileAddon03" aria-label="Upload" oninput="addInputArea()">'
+        );
+    }
+</script>

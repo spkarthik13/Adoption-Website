@@ -9,7 +9,9 @@
 </head>
 <body>
 
-    <% if (user.isAdmin) { %>
+    <% if (user === undefined) { %>
+
+    <% } else if (user.isAdmin) { %>
         <div id="adminPanel" class="alert alert-secondary" role="alert">
             Admin Actions:
             <span id="panelButtons">

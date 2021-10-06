@@ -44,9 +44,9 @@ router.post('/loginUser', async (req, res) => {
     if (User && User.password === password) {
         console.log(`User ${User.fullName} has successfully logged in.`);
         req.session.user = User;
-        res.render(path.resolve('./views/homepage.ejs'), {user: req.session.user});
-    } else  {
-        res.redirect('/loginError');
+        res.redirect('/');
+    } else {
+        res.redirect('/');
     }
 });
 

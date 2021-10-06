@@ -28,4 +28,5 @@ app.listen(process.env.PORT || 3000, () => (console.log(`Server listening on por
 /* TODO: Add a base CSS style that all pages inherit from.
     Add verification middleware to admin panel + associated pages.
     Add error page when user tries to navigate to protected route.
+    Add ability to add multiple files to blog posts.
 */
