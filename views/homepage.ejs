@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@1,200&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="homepage.css">
     <title>Aaron's Adoption</title>
 </head>
@@ -13,7 +16,6 @@
 
     <% } else if (user.isAdmin) { %>
         <div id="adminPanel" class="alert alert-secondary" role="alert">
-            Admin Actions:
             <span id="panelButtons">
                 <a href="/addBlogPost"><button type="button" class="btn btn-primary">Front Page Post</button></a>
                 <button type="button" class="btn btn-primary">Check Adoption Requests</button>
@@ -27,5 +29,22 @@
                 <button type="button" class="btn btn-primary">Add a Front Page Post</button>
                 <button type="button" class="btn btn-primary">Check Adoption Requests</button>
     <% } %>
+    
+    <% blogs.forEach(i => { %>
+        <div id="blogData">
+            <h1 id="blogTitle" class="display-4 blog"> 
+                <%= i.blogTitle %> 
+            </h1>
+            <hr>
+            <p class="blog" id="blogBody"> <%= i.blogText %> </p>
+            <hr>
+
+            <% for (let idx = 0; idx < i.blogPictures.length; idx++) {  %> 
+                    <img class="blogImg center" src="<%= "/uploads/images/" + i.blogPictures[idx].originalname %>" class="d-block w-100">
+            <% } %>
+    <% }) %>
+    
+
+    
 </body>
 </html>

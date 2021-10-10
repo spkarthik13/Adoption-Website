@@ -29,4 +29,7 @@ app.listen(process.env.PORT || 3000, () => (console.log(`Server listening on por
     Add verification middleware to admin panel + associated pages.
     Add error page when user tries to navigate to protected route.
     Add ability to add multiple files to blog posts.
+    Add file name generation to multer within addBlogPostRoute
+    Add password encryption
+    Add admin ability to delete blog post
 */

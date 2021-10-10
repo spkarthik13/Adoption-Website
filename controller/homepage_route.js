@@ -3,12 +3,14 @@ const path = require('path');
 const express = require('express');
 const router = express.Router();
 const Users = require('../models/registration');
+const Blogs = require('../models/blogs');
 
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
+    let homepageBlogs = await Blogs.find({});
     if (req.session.user) {
-        res.render(path.resolve('./views/homepage.ejs'), {user: req.session.user});
+        res.render(path.resolve('./views/homepage.ejs'), {user: req.session.user, blogs: homepageBlogs});
     } else {
-        res.render(path.resolve('./views/homepage.ejs'), {user: undefined});
+        res.render(path.resolve('./views/homepage.ejs'), {user: undefined, blogs: homepageBlogs});
     }
 });
 

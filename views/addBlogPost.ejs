@@ -13,21 +13,21 @@
 
         <div id="formBackground">
             <div id="formContents">
-                <form action="/addBlogPost" method="POST">
+                <form action="/addBlogPost" method="POST" enctype="multipart/form-data">
                     <div class="mb-3">
                         <label for="titleInput" class="form-label">Blog Title</label>
-                        <input type="text" class="form-control" id="titleInput" placeholder="Title" required>
+                        <input type="text" class="form-control" id="titleInput" name="titleInput" placeholder="Title" required>
                     </div>
                     <div class="mb-3">
                         <label for="textareaInput" class="form-label">Blog Text</label>
-                        <textarea class="form-control" id="textareaInput" rows="3" required></textarea>
+                        <textarea class="form-control" name="textareaInput" id="textareaInput" rows="3" required></textarea>
                     </div>
                     <div class="input-group mb-3" id="fileInputArea">
-                        <input type="file" class="form-control" id="inputGroupFile03" aria-describedby="inputGroupFileAddon03" aria-label="Upload" oninput="addInputArea()">
+                        <input type="file" class="form-control" id="inputGroupFile03" name="inputGroupFile03" aria-describedby="inputGroupFileAddon03" aria-label="Upload" oninput="addInputArea()">
                     </div>
 
                     <hr>
-                    <button id="submitButton" type="button" class="btn btn-primary">Submit Blog Post</button>
+                    <button id="submitButton" type="submit" class="btn btn-primary">Submit Blog Post</button>
                 </form>
             </div>
         </div>
@@ -39,7 +39,7 @@
 <script>
     function addInputArea() {
         $('#fileInputArea').append(
-            '<input type="file" class="form-control" id="inputGroupFile03" aria-describedby="inputGroupFileAddon03" aria-label="Upload" oninput="addInputArea()">'
+            '<input type="file" class="form-control" id="inputGroupFile03" name="inputGroupFile03" aria-describedby="inputGroupFileAddon03" aria-label="Upload" oninput="addInputArea()">'
         );
     }
 </script>

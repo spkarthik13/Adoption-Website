@@ -1,5 +1,4 @@
 // Blog schema.
-
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
@@ -12,6 +11,10 @@ const blogSchema = new Schema({
         type: String,
         required: true
     },
-    blogPictures
+    blogPictures: {
+        type: Array,  
+    },
+});
 
-})
+const Blogs = mongoose.model('Blogs', blogSchema);
+module.exports = Blogs;
