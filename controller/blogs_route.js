@@ -5,6 +5,7 @@ const router = express.Router();
 const multer = require('multer');
 const Blog = require('../models/blogs');
 const nanoid = require('nanoid');
+const fs = require('fs');
 
 let checkAdmin = function(req, res, next) {
     if (!req.session.user) {
@@ -79,16 +80,25 @@ router.post('/blogPost/edit/:id', checkAdmin, upload.array('inputGroupFile03', 5
 });
 
 // Delete route for blogs.
-router.post('/blogPost/delete/:id', checkAdmin, (req, res) => {
-    console.log(Blog.findById(req.params.id));
-    Blog.findByIdAndDelete({_id: req.params.id}, err => {
+router.post('/blogPost/delete/:id', checkAdmin, async (req, res) => {
+    deleteBlog = await Blog.findByIdAndDelete({_id: req.params.id})
+    .then(result => {
+        for (let i = 0; i < result.blogPictures.length; i++) {
+            fs.unlink(path.resolve('./public/uploads/images/' + result.blogPictures[i].filename), (err => {
+                if (err) { 
+                    console.log(`Error deleting blog file directory: ${err}`);
+                } else {
+                    console.log(`Successfully deleted file related to blog post: ${result.blogPictures[i].filename}`);
+                }})
+            )
+        }})
+    .catch(err => {
         if (err) {
-            console.log(`Error deleting blog: ${err}`);
-        } else {
-            console.log('Blog successfully deleted.');
-            res.redirect('/');
-        }
-    })
-})
+            console.log(`Error fetching blog from database: ${err}`);
+        }})
+    res.redirect('/');
+});
+    
+
 
 module.exports = router;
