@@ -4,6 +4,7 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const Blog = require('../models/blogs');
+const nanoid = require('nanoid');
 
 let checkAdmin = function(req, res, next) {
     if (!req.session.user) {
@@ -25,7 +26,7 @@ const storage = multer.diskStorage({
         callback(null, './public/uploads/images');
     },
     filename: function(req, file, callback) {
-        callback(null, file.originalname);
+        callback(null, nanoid.nanoid());
     },
 });
 

@@ -25,6 +25,14 @@ const userSchema = new Schema({
     },
     gender: {
         type:String,
+    },
+    isAdmin: {
+        type: Boolean,
+        default: false,
+    },
+    isEmployee: {
+        type: Boolean,
+        default: false,
     }
 }, {timestamps: true});
 

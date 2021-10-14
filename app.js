@@ -27,8 +27,6 @@ app.listen(process.env.PORT || 3000, () => (console.log(`Server listening on por
 
 /* TODO: 
     Add file name generation to multer within addBlogPostRoute
-    Add password encryption
-    Images in blogs seem to prefer JPEG, test with other formats
     TODO make homepage look more "full"
     Animal model: Store image in database
     Finish blog editing to support image changes

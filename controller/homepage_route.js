@@ -4,7 +4,7 @@ const express = require('express');
 const router = express.Router();
 const Users = require('../models/registration');
 const Blogs = require('../models/blogs');
-const bcyrpt = require('bcrypt');
+const bcrypt = require('bcrypt');
 
 router.get('/', async (req, res) => {
     let homepageBlogs = await Blogs.find({}).sort({'createdAt': 'desc'});
@@ -25,8 +25,8 @@ router.post('/newUser', async (req, res) => {
         res.redirect('/');
     } else {
         try {
-            const salt = await bcyrpt.genSalt();
-            const hashedPassword = await bcyrpt.hash(password, salt);
+            const salt = await bcrypt.genSalt();
+            const hashedPassword = await bcrypt.hash(password, salt);
             console.log(salt, hashedPassword);
             newUser = new Users({
                 fullName: fullName,
@@ -55,7 +55,7 @@ router.post('/loginUser', async (req, res) => {
     if (User === null) {
         res.render(path.resolve('./views/error_page.ejs'), {error: 'loginError'});
     } else {
-        let comparedPass = await bcyrpt.compare(password, User.hashedPass);
+        let comparedPass = await bcrypt.compare(password, User.hashedPass);
         if (comparedPass) {
             console.log(`User ${User.fullName} has successfully logged in.`);
             req.session.user = User;
