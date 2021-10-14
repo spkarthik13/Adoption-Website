@@ -4,6 +4,7 @@ const express = require('express');
 const router = express.Router();
 const Users = require('../models/registration');
 const Blogs = require('../models/blogs');
+const bcyrpt = require('bcrypt');
 
 router.get('/', async (req, res) => {
     let homepageBlogs = await Blogs.find({}).sort({'createdAt': 'desc'});
@@ -14,6 +15,7 @@ router.get('/', async (req, res) => {
     }
 });
 
+
 // Two below routes are on the homepage, but are more suited to a login route. Could possibly break these two routes into their own file.
 router.post('/newUser', async (req, res) => {
     const {fullName, email, password, phNumber, gender, address} = req.body;
@@ -22,14 +24,21 @@ router.post('/newUser', async (req, res) => {
         console.log("User already exists in database.");
         res.redirect('/');
     } else {
-    newUser = new Users({
-        fullName: fullName,
-        email: email,
-        phoneNumber: phNumber,
-        password: password,
-        gender: gender,
-        address: address
-    });
+        try {
+            const salt = await bcyrpt.genSalt();
+            const hashedPassword = await bcyrpt.hash(password, salt);
+            console.log(salt, hashedPassword);
+            newUser = new Users({
+                fullName: fullName,
+                email: email,
+                phoneNumber: phNumber,
+                hashedPass: hashedPassword,
+                gender: gender,
+                address: address
+            });
+        } catch {
+            console.log('Error creating hashed password.');
+        };
     newUser.save()
         .then((result) => {
             console.log("New user successfully added to the database: " + result);
@@ -42,15 +51,19 @@ router.post('/newUser', async (req, res) => {
 
 router.post('/loginUser', async (req, res) => {
     const {email, password} = req.body;
-    let User = await Users.findOne({email});
-    if (User && User.password === password) {
-        console.log(`User ${User.fullName} has successfully logged in.`);
-        req.session.user = User;
-        res.redirect('/');
+    const User = await Users.findOne({email});
+    if (User === null) {
+        res.render(path.resolve('./views/error_page.ejs'), {error: 'loginError'});
+    } else {
+        let comparedPass = await bcyrpt.compare(password, User.hashedPass);
+        if (comparedPass) {
+            console.log(`User ${User.fullName} has successfully logged in.`);
+            req.session.user = User;
+            res.redirect('/');
     } else {
         res.render(path.resolve('./views/error_page.ejs'), {error: 'loginError'});
     }
-});
+}});
 
 router.post('/logout', (req, res) => {
     req.session.destroy(err => {
@@ -64,4 +77,3 @@ router.post('/logout', (req, res) => {
 });
 
 module.exports = router;
-
