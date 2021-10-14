@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/userProfileStyle.css">
+    <link rel="stylesheet" href="/css/userProfileStyle.css">
     <title>User Profile</title>
 </head>
 
@@ -14,19 +14,19 @@
         <form action="/userProfile/edit/<%= user._id %>" method="POST">
             <ul class="list-group">
                 <li class="list-group-item">Full Name: 
-                    <div class="form-floating mb-3"><input type="text" class="form-control" name="fullName" id="fullNameBox" placeholder="<%= user.fullName %>"></div>
+                    <input type="text" class="form-control" name="fullName" id="fullNameBox" placeholder="<%= user.fullName %>" required>
                 </li>
                 <li class="list-group-item">Address:
-                    <div class="form-floating mb-3"><input type="text" class="form-control" name="address" id="addressBox" placeholder="<%= user.address %>"></div>
+                    <input type="text" class="form-control" name="address" id="addressBox" placeholder="<%= user.address %>" required>
                 </li>
                 <li class="list-group-item">Phone Number:
-                    <div class="form-floating mb-3"><input type="number" class="form-control" name="phoneNumber" id="" placeholder="<%= user.phoneNumber %>"></div>
+                    <input type="number" class="form-control" name="phoneNumber" id="" placeholder="<%= user.phoneNumber %>" required>
                 </li>
                 <li class="list-group-item">Email: 
-                    <div class="form-floating mb-3"><input type="email" class="form-control" name="email" id="floatingInput" placeholder="<%= user.email %>" disabled></div>
+                    <input type="email" class="form-control" name="email" id="floatingInput" value="<%= user.email %>" disabled>
                 </li>
                 <li class="list-group-item">Gender:
-                    <div class="form-floating mb-3"><input type="text" class="form-control" name="gender" id="floatingInput" placeholder="<%= user.gender %>"></div>
+                   <input type="text" class="form-control" name="gender" id="floatingInput" placeholder="<%= user.gender %>" required>
                 </li>
                 <li class="list-group-item">
                     <button type="submit" class="btn btn-secondary btn-lg btn-block">Submit</button>

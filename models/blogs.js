@@ -14,7 +14,7 @@ const blogSchema = new Schema({
     blogPictures: {
         type: Array,  
     },
-});
+}, {timestamps: true});
 
 const Blogs = mongoose.model('Blogs', blogSchema);
 module.exports = Blogs;

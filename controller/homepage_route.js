@@ -6,7 +6,7 @@ const Users = require('../models/registration');
 const Blogs = require('../models/blogs');
 
 router.get('/', async (req, res) => {
-    let homepageBlogs = await Blogs.find({});
+    let homepageBlogs = await Blogs.find({}).sort({'createdAt': 'desc'});
     if (req.session.user) {
         res.render(path.resolve('./views/homepage.ejs'), {user: req.session.user, blogs: homepageBlogs});
     } else {
@@ -48,7 +48,7 @@ router.post('/loginUser', async (req, res) => {
         req.session.user = User;
         res.redirect('/');
     } else {
-        res.redirect('/');
+        res.render(path.resolve('./views/error_page.ejs'), {error: 'loginError'});
     }
 });
 
@@ -64,3 +64,4 @@ router.post('/logout', (req, res) => {
 });
 
 module.exports = router;
+

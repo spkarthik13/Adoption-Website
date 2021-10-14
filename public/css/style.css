@@ -34,7 +34,6 @@ body {
 .header_container {
     height: 100%;
     display: table;
-    margin: 0 auto;
 }
 
 .header_container h1{
@@ -55,7 +54,7 @@ body {
 .navigation a{
     height: 100%;
     display: table;
-    float: left;
+    float: right;
     padding: 0px 20px;
 }
 
@@ -74,26 +73,4 @@ body {
     background-color: white;
     color:#101010e1;
     border-color: white;
-}
-
-.userProfileContainer {
-    background-color: honeydew;
-    width: 50%;
-    margin: 5vh auto;
-    display: grid;
-    border-radius: 25px;
-}
-
-.list-group {
-    margin: 2%;
-}
-
-.submitBtn {
-    color: #101010e1;
-    background-color: honeydew;
-}
-
-#userProfileTitle {
-    margin: auto;
-    padding-top: 2%;
 }

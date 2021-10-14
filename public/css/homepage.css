@@ -1,0 +1,75 @@
+
+
+#adminPanel {
+    display: block;
+    width:fit-content;
+    background-color:floralwhite;
+    margin: 0 auto;
+    margin-top: 1%;
+}
+
+#blogData {
+    display: inline-block;
+    background-color: floralwhite;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    margin-top: 1%;
+    width: 50%;
+    border-radius: 25px;
+}
+
+.blog {
+    padding-left: 2%;
+    font-family: "Nunito", sans-serif;
+    vertical-align: middle;
+    font-weight:bolder;
+}
+
+#blogTitle {
+    padding-top: 2%;
+}
+
+#blogBody {
+    font-size: large;
+}
+
+.blogImg {
+    width: 25%;
+    height: 25%;
+    padding-bottom: 2%;
+}
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.carousel {
+    width: 60%;
+    height: 25%;
+    margin: auto;
+    margin-bottom: 2%;
+}
+
+.carousel-item img {
+    object-fit: cover;
+    object-position: center;
+    height: 50vh;
+    overflow: hidden;
+}
+
+.flex-container {
+    display: flex;
+    align-items: center;
+}
+
+.btn-danger {
+    margin-right: 2%;
+    margin-top: 2%;
+}
+
+.btn-secondary {
+    margin-right: 2%;
+    margin-top: 2%;
+}
