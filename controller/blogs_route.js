@@ -26,7 +26,7 @@ const storage = multer.diskStorage({
         callback(null, './public/uploads/images');
     },
     filename: function(req, file, callback) {
-        callback(null, nanoid.nanoid());
+        callback(null, nanoid.nanoid() + path.extname(file.originalname));
     },
 });
 
@@ -38,11 +38,10 @@ const upload = multer({
 // Post route for adding a new blog.
 router.post('/addBlogPost', checkAdmin, upload.array('inputGroupFile03', 5), (req, res) => {
     const {titleInput, textareaInput, inputGroupFile03} = req.body;
-
     let blog = new Blog({
         blogTitle: titleInput,
         blogText: textareaInput,
-        blogPictures: req.files
+        blogPictures: req.files,
     });
 
     blog.save()
@@ -81,6 +80,7 @@ router.post('/blogPost/edit/:id', checkAdmin, upload.array('inputGroupFile03', 5
 
 // Delete route for blogs.
 router.post('/blogPost/delete/:id', checkAdmin, (req, res) => {
+    console.log(Blog.findById(req.params.id));
     Blog.findByIdAndDelete({_id: req.params.id}, err => {
         if (err) {
             console.log(`Error deleting blog: ${err}`);
