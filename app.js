@@ -17,18 +17,17 @@ app.use(express.urlencoded({extended: true}), express.json());
 
 // TODO: Look into better way to consolidate route imports instead of just repeating?
 const homepageRoute = require('./controller/homepage_route');
-const loginErrorRoute = require('./controller/error_route');
-const userProfileRoute = require('./controller/userProfile_route');
+const userProfileRoute = require('./controller/user_profile_route');
 const addBlogRoute = require('./controller/blogs_route');
+const petIntakeRoute = require('./controller/pet_intake_route');
+const adoptionOutcomesRoute = require('./controller/adoption_outcomes_route');
 
-app.use(homepageRoute, loginErrorRoute, userProfileRoute, addBlogRoute);
+app.use(homepageRoute, userProfileRoute, addBlogRoute, petIntakeRoute, adoptionOutcomesRoute);
 
 app.listen(process.env.PORT || 3000, () => (console.log(`Server listening on port ${process.env.PORT}.`)));
 
 /* TODO: 
-    Add file name generation to multer within addBlogPostRoute
     TODO make homepage look more "full"
     Animal model: Store image in database
-    Finish blog editing to support image changes
     Figure out how to properly position the edit / delete buttons under admin panel
 */

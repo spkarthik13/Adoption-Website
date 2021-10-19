@@ -23,8 +23,23 @@ const userSchema = new Schema({
     address: {
         type: String,
     },
-    gender: {
+    age: {
+        type:Number,
+    },
+    city: {
         type:String,
+    },
+    squareFt: {
+        type: Number,
+    },
+    children: {
+        type: String,
+    },
+    outdoorArea: {
+        type: String,
+    },
+    fencedArea: {
+        type: String,
     },
     isAdmin: {
         type: Boolean,

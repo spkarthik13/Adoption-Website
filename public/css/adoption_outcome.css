@@ -1,0 +1,28 @@
+#intakeAppDiv {
+    background-color: honeydew;
+    width: 50%;
+    margin: auto;
+    margin-top: 1%;
+    padding: 1%;
+    border-radius: 1%;
+}
+
+.carousel {
+    width: 40%;
+    height: max-content;
+    margin: auto;
+    margin-bottom: 2%;
+}
+
+.carousel-item img {
+    object-fit: cover;
+    object-position:center;
+    height: 50vh;
+    overflow: hidden;
+}
+
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}

@@ -8,23 +8,23 @@ const nanoid = require('nanoid');
 const fs = require('fs');
 
 let checkAdmin = function(req, res, next) {
-    if (!req.session.user) {
-        res.redirect('/');
-    } else if (req.session.user.isAdmin) {
+    if (req.session.user.isAdmin) {
         next();
+    } else {
+        res.redirect('/');
     }
 }
 
 // Get route for adding a new blog post.
 router.get('/addBlogPost', checkAdmin, (req, res) => {
-    res.render(path.resolve('./views/addBlogPost'), {user: req.session.user, blog: undefined});
+    res.render(path.resolve('./views/add_blog_post'), {user: req.session.user, blog: undefined});
 });
 
 // Define storage for multer.
 const storage = multer.diskStorage({
     // Destination for files.
     destination: function(req, file, callback) {
-        callback(null, './public/uploads/images');
+        callback(null, './public/uploads/blog_images');
     },
     filename: function(req, file, callback) {
         callback(null, nanoid.nanoid() + path.extname(file.originalname));
@@ -37,8 +37,8 @@ const upload = multer({
 });
 
 // Post route for adding a new blog.
-router.post('/addBlogPost', checkAdmin, upload.array('inputGroupFile03', 5), (req, res) => {
-    const {titleInput, textareaInput, inputGroupFile03} = req.body;
+router.post('/addBlogPost', checkAdmin, upload.array('fileFormMultiple'), (req, res) => {
+    const {titleInput, textareaInput} = req.body;
     let blog = new Blog({
         blogTitle: titleInput,
         blogText: textareaInput,
@@ -63,7 +63,7 @@ router.get('/blogPost/:id', checkAdmin, async (req, res) => {
 });
 
 // PUT route for blogs.
-router.post('/blogPost/edit/:id', checkAdmin, upload.array('inputGroupFile03', 5),(req, res) => {
+router.post('/blogPost/edit/:id', checkAdmin, upload.array('formFileMultiple', 5),(req, res) => {
     const updateBlog = {
         blogTitle: req.body.titleInput,
         blogText: req.body.textareaInput,
@@ -84,7 +84,7 @@ router.post('/blogPost/delete/:id', checkAdmin, async (req, res) => {
     deleteBlog = await Blog.findByIdAndDelete({_id: req.params.id})
     .then(result => {
         for (let i = 0; i < result.blogPictures.length; i++) {
-            fs.unlink(path.resolve('./public/uploads/images/' + result.blogPictures[i].filename), (err => {
+            fs.unlink(path.resolve('./public/uploads/blog_images/' + result.blogPictures[i].filename), (err => {
                 if (err) { 
                     console.log(`Error deleting blog file directory: ${err}`);
                 } else {

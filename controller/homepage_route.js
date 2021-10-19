@@ -2,7 +2,7 @@
 const path = require('path');
 const express = require('express');
 const router = express.Router();
-const Users = require('../models/registration');
+const Users = require('../models/user');
 const Blogs = require('../models/blogs');
 const bcrypt = require('bcrypt');
 
@@ -18,23 +18,29 @@ router.get('/', async (req, res) => {
 
 // Two below routes are on the homepage, but are more suited to a login route. Could possibly break these two routes into their own file.
 router.post('/newUser', async (req, res) => {
-    const {fullName, email, password, phNumber, gender, address} = req.body;
+    const {email} = req.body;
     let newUser = await Users.findOne({email});
+    console.log(req.body);
     if (newUser) {
         console.log("User already exists in database.");
         res.redirect('/');
     } else {
         try {
             const salt = await bcrypt.genSalt();
-            const hashedPassword = await bcrypt.hash(password, salt);
+            const hashedPassword = await bcrypt.hash(req.body.password, salt);
             console.log(salt, hashedPassword);
             newUser = new Users({
-                fullName: fullName,
-                email: email,
-                phoneNumber: phNumber,
+                fullName: req.body.fullName,
+                email: req.body.email,
+                phoneNumber: req.body.phNumber,
                 hashedPass: hashedPassword,
-                gender: gender,
-                address: address
+                age: req.body.age,
+                address: req.body.address,
+                city: req.body.cityInput,
+                squareFt: req.body.sqFootInput,
+                children: req.body.childrenInput,
+                outdoorArea: req.body.outdoorArea,
+                fencedArea: req.body.fencedArea,
             });
         } catch {
             console.log('Error creating hashed password.');
@@ -65,7 +71,7 @@ router.post('/loginUser', async (req, res) => {
     }
 }});
 
-router.post('/logout', (req, res) => {
+router.get('/logout', (req, res) => {
     req.session.destroy(err => {
         if (err) {
             console.log(err);

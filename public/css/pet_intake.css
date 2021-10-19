@@ -1,0 +1,29 @@
+.animalForm {
+    width: 50%;
+    margin: auto;
+    margin-top: 1%;
+    background-color:honeydew;
+    padding: 2%;
+    border-radius: 1%;
+}
+
+.form-select {
+    width:auto;
+    margin: 1% 0 1% 0;
+}
+
+.form-range {
+    width: 100%;
+}
+
+#ageSelect {
+    margin-top: -1.5%;
+}
+
+#fertilitySelect {
+    margin-top: -1.5%;
+}
+
+#formFileMultipleLabel {
+    margin-top: 1%;
+}

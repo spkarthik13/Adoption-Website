@@ -4,67 +4,167 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@1,200&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/homepage.css">
-    <title>Aaron's Adoption</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="/css/homepage_style.css">
+    <title>Aaron's Adoptions</title>
 </head>
-<body>
-    <% if (user === undefined) { %>
+<body>  
 
-    <% } else if (user.isAdmin) { %> 
-        <div id="adminPanel" class="alert alert-secondary" role="alert">
-            <span id="panelButtons">
-                <a href="/addBlogPost"><button type="button" class="btn btn-primary">Front Page Post</button></a>
-                <button type="button" class="btn btn-primary">Check Adoption Requests</button>
-                <button type="button" class="btn btn-primary">Manage User Privileges</button>
-            </span>
-        </div>
-    <% } %>
-
-    <% blogs.forEach((i, idx) => { %>
-        <div id="blogData">
-            <div class="flex-container">
-                <h1 id="blogTitle" class="display-4 blog"> 
-                    <%= i.blogTitle %>
-                </h1>
-                    <% if (user === undefined) { %> 
-
-                    <% } else if (user.isAdmin) { %>
-                        <div class="optionButtons">
-                            <form action="/blogPost/delete/<%= i._id %>" method="post"><button type="submit" class="btn btn-danger"> Delete</button></form>
-                            <a href="/blogPost/<%= i._id %>"><button type="button" class="btn btn-secondary">Edit</button></a>
-                        </div>
-                    <% } %>     
-            </div>
-            <hr>
-            <p class="blog" id="blogBody"> <%= i.blogText %> </p>
-            <hr>
-
-            <% if (i.blogPictures.length != 0) { %>
-            <div id=<%="blogCarousel" + idx %> class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img class="blogImg center d-block w-100" src=<%="/uploads/images/" + i.blogPictures[0].filename %>>
-                    </div>
-                    <% for (let idx = 1; idx < i.blogPictures.length; idx++) { %>
-                        <div class="carousel-item">
-                            <img class="blogImg center d-block w-100" src=<%="/uploads/images/" + i.blogPictures[idx].filename %>>
-                        </div>
-                    <% } %>
+    <!-- Top Section -->
+    <section class="bg-dark text-light p-5 text-center text-sm-start">
+        <div class="container">
+            <div class="d-sm-flex align-items-center justify-content-between">
+                <div>
+                    <h1>Helping Orphaned Animals Find <span class="text-warning"> Happy Beginnings </span></h1>
+                    <p class="lead my-4"> We aim to help find appropriate homes for animals who need a loving household to be adopted into. </p>
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target=<%="#blogCarousel" + idx %> data-bs-slide="prev">
-                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                  <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target=<%="#blogCarousel" + idx %> data-bs-slide="next">
-                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                  <span class="visually-hidden">Next</span>
-                </button>
+                <img class="img-fluid w-50 d-none d-sm-block" src="/icons/undraw_pet_adoption_2qkw.svg" alt="">
             </div>
-            <% } else {} %>
         </div>
-    <% }) %>
+    </section>
+
+    <!-- Cards -->
+    <section class="p-5" id="siteCards">
+        <div class="container">
+            <div class="row text-center g-4">
+                <div class="col-md">
+                    <div class="card bg-dark text-light">
+                        <div class="card-body text-center">
+                            <div class="h1">
+                            <i class="bi bi-door-open"></i>
+                            </div>
+                            <h3 class="card-title mb-3">
+                                Animals
+                            </h3>
+                            <hr class="w-80">
+                            <p class="card-text">View the animals which are currently available for adoption.</p>
+                            <a href="#" class="btn btn-primary">View Here</a>
+                        </div>
+                    </div>
+                </div>             
+                <div class="col-md">
+                    <div class="col-md">
+                        <div class="card bg-secondary text-light">
+                            <div class="card-body text-center">
+                                <div class="h1">
+                                <i class="bi bi-person-check-fill"></i>
+                                </div>
+                                <h3 class="card-title mb-3">
+                                    Your Profile
+                                </h3>
+                                <hr class="w-80">
+                                <p class="card-text">Create an account, login, or manage your registered information with us.</p>
+                                <a href="#" data-bs-target="#registrationModal" data-bs-toggle="modal" class="btn btn-primary">Register With Us</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>             
+                <div class="col-md">
+                    <div class="col-md">
+                        <div class="card bg-dark text-light">
+                            <div class="card-body text-center">
+                                <div class="h1">
+                                <i class="bi bi-chat-text"></i>
+                                </div>
+                                <h3 class="card-title mb-3">
+                                    Updates
+                                </h3>
+                                <hr class="w-80">
+                                <p class="card-text">View our blog to see any updates happening with our organization.</p>
+                                <a href="#" class="btn btn-primary">Visit Our Blog</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>             
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission Statement -->
+    <section class="p-5 bg-dark text-light" id="aboutUsSection">
+        <div class="container">
+            <div class="row align-items-center justify-content-between">
+                <div class="col-md p-5">
+                    <h2>Our mission</h2>
+                    <p class="lead">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ea voluptatem repellat quaerat voluptates incidunt facere ullam pariatur, eius iusto maxime accusamus iste accusantium. Ex, voluptatem!</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est veniam voluptas aliquid fugiat illum in numquam autem voluptatum perspiciatis cupiditate?</p>
+                </div>
+                <div class="col-md">
+                    <img src="/icons/undraw_Shared_goals_re_jvqd.svg" class="img-fluid" alt="">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Account Management -->
+    <section class="p-5" id="loginSection">
+        <div class="container">
+            <div class="row align-items-center justify-content-between">
+                <div class="col-md">
+                    <img src="/icons/undraw_Profile_re_4a55.svg" class="img-fluid" alt="">
+                </div>
+                <div class="col-md p-5">
+                    <h2>Manage your account</h2>
+                    <p class="lead">We require patron's of Aaron's adoptions to register an account with us. It helps us get to know you and consider which animal would be an appropriate match, for both parties!</p>
+                    <p>It's important that we consider the potential new environment and chemistry between the adoptee and the animal's breed, temperament, as well as various other factors when an application is recieved for adoption.</p>
+                    <% if (user) { %> 
+                        <a href="/userProfile/<%= user._id %>" class="btn btn-primary mt-3">
+                            Manage Your Account
+                        </a>
+                    <% } else { %> 
+                        <a href="#" data-bs-target="#loginModal" data-bs-toggle="modal" class="btn btn-primary">Login Here</a>
+                    <% } %> 
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="p-5 bg-dark" id="faq">
+        <h2 class="text-light text-center">Frequently Asked Questions</h2>
+        <div class="container py-3">
+            <div class="accordion" id="accordionExample">
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                      Where do these animals come from?
+                    </button>
+                  </h2>
+                  <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aspernatur laboriosam tenetur quo minima maxime aperiam. Nulla quos vero omnis sequi voluptatem optio tempore dolorum? Sit possimus temporibus placeat saepe dicta eveniet laboriosam facere provident enim, numquam asperiores dolore deleniti quasi sequi inventore ea ad libero earum! Delectus autem amet id.
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                      Is everyone guaranteed to be accepted as an adoptee?
+                    </button>
+                  </h2>
+                  <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Eveniet quas, obcaecati distinctio ipsum beatae debitis, corporis nostrum non ut, cupiditate enim? Illo qui dicta, natus, totam cumque deserunt sequi nobis dolorem eaque facere, accusantium aut! Suscipit blanditiis voluptas quas itaque, nisi ex quia incidunt eveniet praesentium odit maiores laboriosam error.
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="headingThree">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                      What is the cost associated with an adoption?
+                    </button>
+                  </h2>
+                  <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates illo reiciendis nostrum suscipit quasi, in minus quis iusto vitae amet ipsam, optio nesciunt? Totam ex perferendis enim earum excepturi sapiente debitis saepe aut odio numquam. Id aut veritatis expedita dolores maiores aliquid eius, temporibus possimus, quam nulla consectetur sunt ullam.
+                    </div>
+                  </div>
+                </div>
+              </div>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 </html>
