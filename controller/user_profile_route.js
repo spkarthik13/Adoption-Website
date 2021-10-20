@@ -12,15 +12,20 @@ checkUser = function(req, res, next) {
     }
 };
 
-router.get('/userProfile/:id', checkUser, (req, res) => {
-    res.render(path.resolve('./views/user_profile.ejs'), {user: req.session.user});
+router.get('/userProfile/:id', checkUser, async (req, res) => {
+    const grabUser = await Users.findById({_id:req.params.id})
+    .then((result) => {
+        userImmutableProps = { fullName: result.fullName, email: result.email};
+        res.render(path.resolve('./views/user_profile.ejs'), {grabUser: userImmutableProps, user: req.session.user});
+    })
+    .catch(err => {
+        console.log(`Error grabbing user profile on the update page: ${err}`);
+    });
 });
 
 // Update route.
-router.post('/userProfile/edit/:id', checkUser, (req, res) => {
-    console.log(req.params.id);
+router.post('/userProfile/edit/:id', checkUser, async (req, res) => {
     let User = {
-        fullName: req.body.fullName,
         phoneNumber: req.body.phNumber,
         age: req.body.age,
         address: req.body.address,
@@ -31,13 +36,12 @@ router.post('/userProfile/edit/:id', checkUser, (req, res) => {
         fencedArea: req.body.fencedArea,
     };
 
-    Users.findByIdAndUpdate({_id:req.params.id}, User, (error, result) => {
-        if (error) {
-            console.log(error);
-        } else {
-            console.log('User successfully updated.');
-            res.redirect('/');
-        }
-    });
+    await Users.findByIdAndUpdate({_id:req.params.id}, User)
+    .then((result) => {
+        res.redirect('/');
+    })
+    .catch((error) => {
+        console.log(`Error updating user: ${error}`);
+    })
 });
 module.exports = router;

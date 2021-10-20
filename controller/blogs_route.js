@@ -16,8 +16,14 @@ let checkAdmin = function(req, res, next) {
 }
 
 // Get route for adding a new blog post.
-router.get('/addBlogPost', checkAdmin, (req, res) => {
-    res.render(path.resolve('./views/add_blog_post'), {user: req.session.user, blog: undefined});
+router.get('/blogs', async (req, res) => {
+    await Blog.find({}).sort({createdAt: -1})
+    .then((result) => {
+        res.render(path.resolve('./views/blogs'), {user: req.session.user, blogs: result});
+    })
+    .catch((err) => {
+        console.log(`Error grabbing blogs from the database: ${err}`);
+    });
 });
 
 // Define storage for multer.
@@ -37,11 +43,11 @@ const upload = multer({
 });
 
 // Post route for adding a new blog.
-router.post('/addBlogPost', checkAdmin, upload.array('fileFormMultiple'), (req, res) => {
-    const {titleInput, textareaInput} = req.body;
+router.post('/add_blog_post', checkAdmin, upload.array('formFileMultiple'), (req, res) => {
+    console.log(req.body);
     let blog = new Blog({
-        blogTitle: titleInput,
-        blogText: textareaInput,
+        blogTitle: req.body.blogTitle,
+        blogText: req.body.blogText,
         blogPictures: req.files,
     });
 
@@ -53,7 +59,7 @@ router.post('/addBlogPost', checkAdmin, upload.array('fileFormMultiple'), (req, 
             console.log(`Error saving blog to the database: ${error}`);
         });
 
-    res.redirect('/');
+    res.redirect('/blogs');
 });
 
 // Get route which brings in blog to "edit blog page".

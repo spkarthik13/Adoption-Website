@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/userProfileStyle.css">
+    
     <title>User Profile</title>
 </head>
 <body class="bg-dark">
@@ -17,11 +18,11 @@
                 <div class="col-md p-2">
                     <h4 class="fw-normal text-center">Personal Information</h4>
                     <ul class="list-group">
-                        <li class="list-group-item">Full Name: <input type="text" class="form-control" name="fullName" placeholder="<%= user.fullName %>"></li>
-                        <li class="list-group-item">Address: <input type="text" name="address" class="form-control" placeholder="<%= user.address %>"></li>
-                        <li class="list-group-item">Phone Number: <input type="tel" name="phoneNumber" class="form-control" placeholder="<%= user.phoneNumber%>"></li>
-                        <li class="list-group-item">Email: <input type="email" name="email" class="form-control" placeholder="<%= user.email %>" disabled></li>
-                        <li class="list-group-item">Age: <input type="number" name="age" class="form-control" value="<%= user.age %>"></li>
+                        <li class="list-group-item">Full Name: <input type="text" class="form-control" name="fullName" placeholder="<%= grabUser.fullName %>" disabled></li>
+                        <li class="list-group-item">Address: <input type="text" name="address" class="form-control"></li>
+                        <li class="list-group-item">Phone Number: <input type="tel" name="phoneNumber" class="form-control"></li>
+                        <li class="list-group-item">Email: <input type="email" name="email" class="form-control" placeholder="<%= grabUser.email %>" disabled></li>
+                        <li class="list-group-item">Age: <input type="number" name="age" class="form-control"></li>
                     </ul>
                 </div>
                 <div class="col-md p-2">
@@ -35,14 +36,14 @@
                             <option value="False">No</option>
                           </select>
                         </li>
-                        <li class="list-group-item">Outdoor Area:<select class="form-select" id="outdoorArea" name="outdoorArea" onchange="outdoorBool()" aria-label="Default select example">
+                        <li class="list-group-item">Outdoor Area:<select class="form-select" id="outdoorAreaUP" name="outdoorArea" onchange="outdoorBoolUP()" aria-label="Default select example">
                             <option selected></option>
                             <option value="True">Yes</option>
                             <option value="False">No</option>
                           </select>
                         </li>
                         <li class="list-group-item">Fenced In?
-                            <select class="form-select" id="fencedArea" name="fencedArea" aria-label="Default select example" disabled>
+                            <select class="form-select" id="fencedAreaUP" name="fencedArea" aria-label="Default select example" disabled>
                                 <option selected>No</option>
                                 <option value="True">Yes</option>
                                 <option value="False">No</option>
@@ -61,12 +62,12 @@
 </html>
 
 <script>
-    function outdoorBool() {
-        if ($('#outdoorArea').val() === "True") {
-            $('#fencedArea').prop('disabled', false);
+    function outdoorBoolUP() {
+        if ($('#outdoorAreaUP').val() === "True") {
+            $('#fencedAreaUP').prop('disabled', false);
         } else {
-            $('#fencedArea').val('No');
-            $('#fencedArea').prop('disabled', true);
+            $('#fencedAreaUP').val('No');
+            $('#fencedAreaUP').prop('disabled', true);
         }
     }
 </script>

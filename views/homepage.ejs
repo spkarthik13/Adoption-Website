@@ -55,7 +55,11 @@
                                 </h3>
                                 <hr class="w-80">
                                 <p class="card-text">Create an account, login, or manage your registered information with us.</p>
-                                <a href="#" data-bs-target="#registrationModal" data-bs-toggle="modal" class="btn btn-primary">Register With Us</a>
+                                <% if (user) { %>
+                                    <a href="/userProfile/<%= user._id %>" class="btn btn-primary"> Manage Your Account </a>
+                                <% } else { %>
+                                    <a href="#" data-bs-target="#registrationModal" data-bs-toggle="modal" class="btn btn-primary">Register With Us</a>
+                                <% } %>
                             </div>
                         </div>
                     </div>
@@ -72,7 +76,7 @@
                                 </h3>
                                 <hr class="w-80">
                                 <p class="card-text">View our blog to see any updates happening with our organization.</p>
-                                <a href="#" class="btn btn-primary">Visit Our Blog</a>
+                                <a href="/blogs" class="btn btn-primary">Visit Our Blog</a>
                             </div>
                         </div>
                     </div>

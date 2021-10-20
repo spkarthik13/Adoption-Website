@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/blogs.css">
+    <title>Aaron's Adoptions Blog</title>
+</head>
+<body>
+    
+    <% if (user && user.isAdmin) { %>
+      <section class="bg-dark p-3 text-center">
+          <div class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#blogModal">Add a New Blog</div>
+      </section>
+    <% } %>
+
+    <!-- Light Blog Sections -->
+    <% blogs.forEach((b, index) => { %>
+    <% if (index % 2 === 0) { %>
+        <section class="bg-light p-5">
+        <div class="container d-flex-column w-50">
+            <div class="text-dark d-flex align-items-center">
+              <h2 class="flex-grow-1"><%= b.blogTitle %></h2>
+              <div class="btn btn-secondary mx-2" data-bs-target="#editBlogModal" data-bs-toggle="modal">Edit Blog</div>
+              <a href="#" class="btn btn-danger">Delete Blog</a>
+            </div>
+            <% const createDate = new Date (b.createdAt).toDateString(); %>
+            <div><%= createDate %> </div>
+            <div class="my-5 justify-content-between"> 
+              <div class="text-start my-5"> <%= b.blogText %> </div>
+              <div id="carouselLight<%= index %>" class="carousel slide mb-3" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                  <% if (b.blogPictures.length === 0) { %>
+                  <% } else if (b.blogPictures.length === 1) { %>
+                    <button type="button" data-bs-target="#carouselLight<%= index %>" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                  <% } else { %>
+                    <button type="button" data-bs-target="#carouselLight<%= index %>" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                  <% for (let i = 1; i < b.blogPictures.length; i++) { %>
+                      <button type="button" data-bs-target="#carouselLight<%= index %>" data-bs-slide-to="<%= i %>" aria-label="Slide <% i + 1 %>"></button>
+                  <% }} %>
+                </div>
+
+                <% if (b.blogPictures.length === 0) { %>
+                <% } else if (b.blogPictures.length === 1) { %>
+                  <div class="carousel-inner">
+                    <div class="carousel-item active">
+                      <img src="uploads/blog_images/<%= b.blogPictures[0].filename %>" class="d-block w-100" alt="...">
+                    </div>
+                  </div>
+                <% } else { %>
+                <div class="carousel-inner">
+                  <div class="carousel-item active">
+                    <img src="uploads/blog_images/<%= b.blogPictures[0].filename %>" class="d-block w-100" alt="...">
+                  </div>
+                  <% for (let i = 1; i < b.blogPictures.length; i++) { %>
+                    <div class="carousel-item">
+                      <img src="uploads/blog_images/<%= b.blogPictures[i].filename %>" class="d-block w-100" alt="...">
+                    </div>
+                  <% }} %>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselLight<%= index %>" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselLight<%= index %>" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+              </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dark Blog Sections -->
+    <% } else { %>
+    <section class="bg-dark text-light p-5">
+        <div class="container d-flex-column w-50">
+            <div class="d-flex align-items-center">
+              <h2 class="flex-grow-1"><%= b.blogTitle %></h2>
+              <a href="#" class="btn btn-secondary mx-2">Edit Blog</a>
+              <a href="#" class="btn btn-danger">Delete Blog</a>
+            </div>
+            <% const createDate = new Date (b.createdAt).toDateString(); %>
+            <div><%= createDate %> </div>
+            <div class="my-5 justify-content-between"> 
+              <div class="text-start my-5"> <%= b.blogText %> </div>
+              <div id="carouselDark<%= index %>" class="carousel slide mb-3" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                  <% if (b.blogPictures.length === 0) { %>
+                  <% } else if (b.blogPictures.length === 1) { %>
+                    <button type="button" data-bs-target="#carouselDark<%= index %>" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                  <% } else { %>
+                    <button type="button" data-bs-target="#carouselDark<%= index %>" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                  <% for (let i = 1; i < b.blogPictures.length; i++) { %>
+                      <button type="button" data-bs-target="#carousel<%= index %>" data-bs-slide-to="<%= i %>" aria-label="Slide <% i + 1 %>"></button>
+                  <% }} %>
+                </div>
+                    <% if (b.blogPictures.length === 0) { %>
+                    <% } else if (b.blogPictures.length === 1) { %>
+                      <div class="carousel-inner">
+                        <div class="carousel-item active">
+                          <img src="uploads/blog_images/<%= b.blogPictures[0].filename %>" class="d-block w-100" alt="...">
+                        </div>
+                      </div>
+                    <% } else { %>
+                      <div class="carousel-inner">
+                      <div class="carousel-item active">
+                        <img src="uploads/blog_images/<%= b.blogPictures[0].filename %>" class="d-block w-100" alt="...">
+                      </div>
+                    <% for (let i = 1; i < b.blogPictures.length; i++) { %>
+                      <div class="carousel-item">
+                        <img src="uploads/blog_images/<%= b.blogPictures[i].filename %>" class="d-block w-100" alt="...">
+                      </div>
+                    <% }} %>
+                  </div>
+                <% if (b.blogPictures.length > 1) { %>
+                  <button class="carousel-control-prev" type="button" data-bs-target="#carouselDark<%= index %>" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                  </button>
+                  <button class="carousel-control-next" type="button" data-bs-target="#carouselDark<%= index %>" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                  </button>
+                <% } %>
+              </div>
+            </div>
+        </div>
+    </section>
+
+    <% }}); %>
+
+    <!-- New blog modal -->
+    <div class="modal fade" id="blogModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Add a Blog Post</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="/add_blog_post" method="post" enctype="multipart/form-data">
+                      <div class="d-flex justify-content-between mb-3">
+                        <label for="exampleFormControlInput1" class="form-label align-self-end">Blog Title</label>
+                        <input type="text" name='blogTitle' class="form-control w-75" id="exampleFormControlInput1" required>
+                      </div>
+                      <div class="d-flex justify-content-between mb-3">
+                        <label for="exampleFormControlInput1" class="form-label align-self-center">Blog Text Body</label>
+                        <textarea class="form-control w-75" name='blogText' id="exampleFormControlInput1" rows="3" required></textarea>
+                      </div>
+                      <div class="d-flex justify-content-between align-items-center mb-3">
+                        <label for="formFileMultiple" class="form-label">File Input</label>
+                        <input class="form-control w-75 h-75" type="file" id="formFileMultiple" name="formFileMultiple" multiple>
+                      </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                  </div>
+                </form>
+          </div>
+        </div>
+    </div>
+
+    <!-- Edit blog modal -->
+    <div class="modal fade" id="editBlogModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="editBlogModalLabel">Edit a Blog Post</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+              <form action="/add_blog_post" method="post" enctype="multipart/form-data">
+                    <div class="d-flex justify-content-between mb-3">
+                      <label for="exampleFormControlInput1" class="form-label align-self-end">Blog Title</label>
+                      <input type="text" name='blogTitle' class="form-control w-75" id="exampleFormControlInput1" required>
+                    </div>
+                    <div class="d-flex justify-content-between mb-3">
+                      <label for="exampleFormControlInput1" class="form-label align-self-center">Blog Text Body</label>
+                      <textarea class="form-control w-75" name='blogText' id="exampleFormControlInput1" rows="3" required></textarea>
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                      <label for="formFileMultiple" class="form-label">File Input</label>
+                      <input class="form-control w-75 h-75" type="file" id="formFileMultiple" name="formFileMultiple" multiple>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+              </form>
+        </div>
+      </div>
+  </div>
+
+</body>
+</html>
