@@ -22,14 +22,14 @@
             <div class="collapse navbar-collapse" id="navmenu">
                 <ul class="navbar-nav d-flex gap-3 ms-auto">
                 <li class="nav-item">
-                    <button class="btn btn-outline-secondary text-light" type="button">Our Animals</button>
+                    <button class="btn btn-outline-secondary text-light" data-bs-target="#animalQueryModal" data-bs-toggle="modal" type="button">Our Animals</button>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <button class="btn btn-outline-secondary text-light" data-bs-target="#aboutUsModal" data-bs-toggle="modal" type="button">About Us</button>
-                </li>
-                <li class="nav-item">
+                </li> -->
+                <!-- <li class="nav-item">
                     <button class="btn btn-outline-secondary text-light" data-bs-target="#contactModal" data-bs-toggle="modal" type="button">Contact Us</button>
-                </li>
+                </li> -->
                 <% if (user) { %>
                     <li class="nav-item">
                         <a href="/userProfile/<%= user._id %>"><button class="btn btn-outline-secondary text-light" type="button"><%= user.fullName %></button>
@@ -177,11 +177,11 @@
         </div>
     </div>
 
-    <!-- Contact Info Modal -->
-    <div class="modal fade" id="contactModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog">
+    <!-- Contact Info Modal (Removed from Nav Bar) -->
+    <!-- <div class="modal fade" id="contactModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog"> -->
             <!-- Contact modal content-->
-            <div class="modal-content">
+            <!-- <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Contact Us</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -200,13 +200,13 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
-    <!-- About Us Modal -->
-    <div class="modal fade" id="aboutUsModal" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog">
+    <!-- About Us Modal (Currently Removed Due To Front Page Info)-->
+    <!-- <div class="modal fade" id="aboutUsModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog"> -->
             <!-- About modal content-->
-            <div class="modal-content">
+            <!-- <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">About Us</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -223,7 +223,9 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
+
+
 
     <!-- END OF HEADER-->
 

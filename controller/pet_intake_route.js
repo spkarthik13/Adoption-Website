@@ -10,7 +10,7 @@ isMember = function(req, res, next) {
     if (req.session.user) {
         next();
     } else {
-        redirect('/');
+        res.redirect('/');
     }
 }
 router.get('/pet_intake', isMember, (req, res) => {
@@ -34,17 +34,17 @@ const upload = multer({
 });
 
 router.post('/pet_intake', isMember, upload.array('formFileMultiple'), (req, res) => {
-    const { animalName, ageSelect, genderSelect, 
-            animalSpecies, animalBreed, fertilitySelect, 
-            weightSelect, animalBio} = req.body;
+    const { animalName, animalAge, animalGender, 
+            animalSpecies, animalBreed, animalReproduction, 
+            animalWeight, animalBio } = req.body;
     const newPet = new Pet({
         name: animalName,
-        age: ageSelect,
-        gender: genderSelect,
+        age: animalAge,
+        gender: animalGender,
         species: animalSpecies,
         breed: animalBreed,
-        sterile: fertilitySelect,
-        weight: weightSelect,
+        sterile: animalReproduction,
+        weight: animalWeight,
         intakeMember: req.session.user._id,
         otherInfo: animalBio,
         pictures: req.files,

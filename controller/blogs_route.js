@@ -80,7 +80,7 @@ router.post('/blogPost/edit/:id', checkAdmin, upload.array('formFileMultiple', 5
             console.log(`Error updating blog: ${err}`);
         } else {
             console.log('Blog successfully updated.');
-            res.redirect('/');
+            res.redirect('/blogs');
         }
     });
 });
@@ -102,7 +102,7 @@ router.post('/blogPost/delete/:id', checkAdmin, async (req, res) => {
         if (err) {
             console.log(`Error fetching blog from database: ${err}`);
         }})
-    res.redirect('/');
+    res.redirect('/blogs');
 });
     
 

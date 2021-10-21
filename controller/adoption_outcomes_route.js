@@ -2,7 +2,7 @@
 const path = require('path');
 const express = require('express');
 const router = express.Router();
-const Pet = require('../models/pet');
+const Pet = require('models/pet');
 
 let checkAdmin = function(req, res, next) {
     if (!req.session.user.isAdmin) {

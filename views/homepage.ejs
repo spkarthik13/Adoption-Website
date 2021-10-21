@@ -39,7 +39,7 @@
                             </h3>
                             <hr class="w-80">
                             <p class="card-text">View the animals which are currently available for adoption.</p>
-                            <a href="#" class="btn btn-primary">View Here</a>
+                            <a data-bs-target="#animalQueryModal" data-bs-toggle="modal" class="btn btn-primary">View Here</a>
                         </div>
                     </div>
                 </div>             
@@ -168,6 +168,138 @@
               </div>
         </div>
     </section>
+
+    <!-- Animal Page Query -->
+    <div class="modal fade" id="animalQueryModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="animalQueryModalLabel">Choose An Option</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="d-flex flex-column gap-3">
+                    <a href="" class="btn btn-primary">View Animals Available For Adoption</a>
+                    <a data-bs-target="#animalIntakeModal" data-bs-toggle="modal" data-bs-dismiss="modal" class="btn btn-secondary">Apply To Place An Animal For Adoption</a>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Animal Intake Application Modal -->
+    <div class="modal fade" id="animalIntakeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Application of Animal Intake</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+                <form action="/pet_intake" method="post" enctype="multipart/form-data">
+                    <div class="container">
+                        <div class="row m-3 align-items-center">
+                            <div class="col">
+                                <div>Animal Name: </div>
+                            </div>
+                            <div class="col">
+                                <input type="text" name="animalName" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row m-3 align-items-center">
+                            <div class="col">
+                                Animal Age:
+                            </div>
+                            <div class="col">
+                                <select class="form-select" name="animalAge">
+                                <option selected></option>
+                                <option value="0-2">0-2</option>
+                                <option value="2-5">2-5</option>
+                                <option value="5-10">5-10</option>
+                                <option value="10+">10+</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row m-3 align-items-center">
+                            <div class="col">
+                                Animal Gender:
+                            </div>
+                            <div class="col">
+                                <select name="animalGender" class="form-select">
+                                <option selected></option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row m-3 align-items-center">
+                            <div class="col">
+                                Animal Species:
+                            </div>
+                            <div class="col">
+                                <select name="animalSpecies" class="form-select">
+                                <option selected></option>
+                                    <option value="Dog">Dog</option>
+                                    <option value="Cat">Cat</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row m-3 align-items-center">
+                            <div class="col">
+                                Animal Breed:
+                            </div>
+                            <div class="col">
+                                <input type="text" name="animalBreed" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row m-3 align-items-center">
+                            <div class="col">
+                                Animal Reproductive Status:
+                            </div>
+                            <div class="col">
+                                <select name="animalReproduction" class="form-select">
+                                    <option selected></option>
+                                    <option value="Infertile">Infertile (Spayed / Neutered)</option>
+                                    <option value="Fertile">Fertile (Unspayed / Not Neutered)</option>
+                                    <option value="Unsure">Unsure</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row m-3 align-items-center">
+                            <div class="col">
+                                Animal Weight:
+                            </div>
+                            <div class="col">
+                                <select name="animalWeight" class="form-select">
+                                    <option selected></option>
+                                    <option value="< 10">Less Than 10lbs</option>
+                                    <option value="> 10, < 25">More than 10, less than 25lbs</option>
+                                    <option value="> 25, < 50">Greater than 25, less then 50lbs</option>
+                                    <option value="> 50">Greater than 50lbs</option>
+                                </select>
+                            </div>
+                            <div class="row m-0 my-3 align-items-center">
+                                    <textarea name="animalBio" cols="30" rows="5" placeholder="Please let us know anything else you think is relevant to the medical history, temperment, attitude or other characteristics of the animal."></textarea>
+                            </div>
+                            <div class="row mb-3 align-items-center">
+                                <div class="col">
+                                    <label for="formFileMultiple" class="form-label">Please include some photos of the animal: </label>
+                                    <input class="form-control" type="file" name="formFileMultiple" id="formFileMultiple" multiple>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Submit Application</button>
+            </div>
+        </form>
+            </div>
+        </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
