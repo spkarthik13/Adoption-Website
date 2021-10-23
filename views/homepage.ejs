@@ -17,7 +17,12 @@
             <div class="d-sm-flex align-items-center justify-content-between">
                 <div>
                     <h1>Helping Orphaned Animals Find <span class="text-warning"> Happy Beginnings </span></h1>
-                    <p class="lead my-4"> We aim to help find appropriate homes for animals who need a loving household to be adopted into. </p>
+                    <p class="lead my-4"> We aim to help find appropriate homes for animals who need a loving household to be adopted into.</p>
+                    <% if (user) { %>
+                        <a data-bs-toggle="modal" data-bs-target="#animalQueryModal" class="btn btn-primary btn-lg">Our Current Animals</a>
+                    <% } else { %> 
+                        <button data-bs-target="#loginModal" data-bs-toggle="modal" class="btn btn-primary btn-lg">Our Current Animals</a>
+                    <% } %> 
                 </div>
                 <img class="img-fluid w-50 d-none d-sm-block" src="/icons/undraw_pet_adoption_2qkw.svg" alt="">
             </div>
@@ -29,20 +34,22 @@
         <div class="container">
             <div class="row text-center g-4">
                 <div class="col-md">
-                    <div class="card bg-dark text-light">
-                        <div class="card-body text-center">
-                            <div class="h1">
-                            <i class="bi bi-door-open"></i>
+                    <div class="col-md">
+                        <div class="card bg-dark text-light">
+                            <div class="card-body text-center">
+                                <div class="h1">
+                                <i class="bi bi-chat-text"></i>
+                                </div>
+                                <h3 class="card-title mb-3">
+                                    Updates
+                                </h3>
+                                <hr class="w-80">
+                                <p class="card-text">View our blog to see any updates happening with our organization.</p>
+                                <a href="/blogs" class="btn btn-primary">Visit Our Blog</a>
                             </div>
-                            <h3 class="card-title mb-3">
-                                Animals
-                            </h3>
-                            <hr class="w-80">
-                            <p class="card-text">View the animals which are currently available for adoption.</p>
-                            <a data-bs-target="#animalQueryModal" data-bs-toggle="modal" class="btn btn-primary">View Here</a>
                         </div>
                     </div>
-                </div>             
+                </div>            
                 <div class="col-md">
                     <div class="col-md">
                         <div class="card bg-secondary text-light">
@@ -64,23 +71,24 @@
                         </div>
                     </div>
                 </div>             
+
                 <div class="col-md">
-                    <div class="col-md">
-                        <div class="card bg-dark text-light">
-                            <div class="card-body text-center">
-                                <div class="h1">
-                                <i class="bi bi-chat-text"></i>
-                                </div>
-                                <h3 class="card-title mb-3">
-                                    Updates
-                                </h3>
-                                <hr class="w-80">
-                                <p class="card-text">View our blog to see any updates happening with our organization.</p>
-                                <a href="/blogs" class="btn btn-primary">Visit Our Blog</a>
+                    <div class="card bg-dark text-light">
+                        <div class="card-body text-center">
+                            <div class="h1">
+                            <i class="bi bi-telephone"></i>
                             </div>
+                            <h3 class="card-title mb-3">
+                                Contact Us
+                            </h3>
+                            <hr class="w-80">
+                            <p class="card-text">Find the most convenient way for you to contact us.
+                            </p>
+                            <br>
+                            <a data-bs-target="#contactModal" data-bs-toggle="modal" class="btn btn-primary">View Here</a>
                         </div>
                     </div>
-                </div>             
+                </div>              
             </div>
         </div>
     </section>
@@ -205,7 +213,7 @@
                                 <div>Animal Name: </div>
                             </div>
                             <div class="col">
-                                <input type="text" name="animalName" class="form-control">
+                                <input type="text" name="animalName" class="form-control" required>
                             </div>
                         </div>
                         <div class="row m-3 align-items-center">
@@ -213,7 +221,7 @@
                                 Animal Age:
                             </div>
                             <div class="col">
-                                <select class="form-select" name="animalAge">
+                                <select class="form-select" name="animalAge" required>
                                 <option selected></option>
                                 <option value="0-2">0-2</option>
                                 <option value="2-5">2-5</option>
@@ -227,7 +235,7 @@
                                 Animal Gender:
                             </div>
                             <div class="col">
-                                <select name="animalGender" class="form-select">
+                                <select name="animalGender" class="form-select" required>
                                 <option selected></option>
                                 <option value="Male">Male</option>
                                 <option value="Female">Female</option>
@@ -239,7 +247,7 @@
                                 Animal Species:
                             </div>
                             <div class="col">
-                                <select name="animalSpecies" class="form-select">
+                                <select name="animalSpecies" class="form-select" required>
                                 <option selected></option>
                                     <option value="Dog">Dog</option>
                                     <option value="Cat">Cat</option>
@@ -252,7 +260,7 @@
                                 Animal Breed:
                             </div>
                             <div class="col">
-                                <input type="text" name="animalBreed" class="form-control">
+                                <input type="text" name="animalBreed" class="form-control" required>
                             </div>
                         </div>
                         <div class="row m-3 align-items-center">
@@ -260,7 +268,7 @@
                                 Animal Reproductive Status:
                             </div>
                             <div class="col">
-                                <select name="animalReproduction" class="form-select">
+                                <select name="animalReproduction" class="form-select" required>
                                     <option selected></option>
                                     <option value="Infertile">Infertile (Spayed / Neutered)</option>
                                     <option value="Fertile">Fertile (Unspayed / Not Neutered)</option>
@@ -273,7 +281,7 @@
                                 Animal Weight:
                             </div>
                             <div class="col">
-                                <select name="animalWeight" class="form-select">
+                                <select name="animalWeight" class="form-select" required>
                                     <option selected></option>
                                     <option value="< 10">Less Than 10lbs</option>
                                     <option value="> 10, < 25">More than 10, less than 25lbs</option>

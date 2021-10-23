@@ -86,7 +86,7 @@ router.post('/blogPost/edit/:id', checkAdmin, upload.array('formFileMultiple', 5
 });
 
 // Delete route for blogs.
-router.post('/blogPost/delete/:id', checkAdmin, async (req, res) => {
+router.get('/blogPost/delete/:id', checkAdmin, async (req, res) => {
     deleteBlog = await Blog.findByIdAndDelete({_id: req.params.id})
     .then(result => {
         for (let i = 0; i < result.blogPictures.length; i++) {

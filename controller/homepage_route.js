@@ -15,44 +15,4 @@ router.get('/', async (req, res) => {
     }
 });
 
-
-// Two below routes are on the homepage, but are more suited to a login route. Could possibly break these two routes into their own file.
-router.post('/newUser', async (req, res) => {
-    const {email} = req.body;
-    let newUser = await Users.findOne({email});
-    console.log(req.body);
-    if (newUser) {
-        console.log("User already exists in database.");
-        res.redirect('/');
-    } else {
-        try {
-            const salt = await bcrypt.genSalt();
-            const hashedPassword = await bcrypt.hash(req.body.password, salt);
-            console.log(salt, hashedPassword);
-            newUser = new Users({
-                fullName: req.body.fullName,
-                email: req.body.email,
-                phoneNumber: req.body.phNumber,
-                hashedPass: hashedPassword,
-                age: req.body.age,
-                address: req.body.address,
-                city: req.body.cityInput,
-                squareFt: req.body.sqFootInput,
-                children: req.body.childrenInput,
-                outdoorArea: req.body.outdoorArea,
-                fencedArea: req.body.fencedArea,
-            });
-        } catch {
-            console.log('Error creating hashed password.');
-        };
-    newUser.save()
-        .then((result) => {
-            console.log("New user successfully added to the database: " + result);
-            res.redirect('/');
-        })
-        .catch((error) => {
-            console.log("Error adding user to the database: " + error);
-        })
-}});
-
 module.exports = router;

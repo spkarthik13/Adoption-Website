@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aaron's Adoptions Current Animals</title>
+</head>
+<body>
+    
+    <section class="bg-dark p-5 text-light">
+        <div class="container bg-light text-dark">
+            Filter buttons placeholder
+        </div>
+    </section>
+
+    <!-- All Unapproved Pets -->
+    <% if (unapprovedPet.length === 0) {} else { %>
+    <% if (user && user.isAdmin) { %>
+    <% unapprovedPet.forEach((i, index) => { %>
+    <% if (index % 2 == 0) { %>
+    <section class="bg-dark p-5 text-light">
+    <% } else { %>
+    <section class="bg-light p-5 text-dark">
+    <% } %>
+        <div class="container">
+            <div class="row">
+            <div class="col">
+                <div class="row">
+                    <div class="col">
+                        <div class="mb-1">Name: <%=i.name%></div>
+                        <div class="mb-1">Age: <%=i.age%></div>
+                        <div class="mb-1">Gender: <%=i.gender%></div>
+                        <div class="mb-1">Species: <%=i.species%></div>
+                    </div>
+                    <div class="col-md">
+                        <div class="col mb-1">Breed: <%= i.breed %></div>
+                        <div class="col mb-1">Sterile: <%= i.sterile %></div>
+                        <div class="col mb-1">Weight: <%= i.weight %>lbs</div>
+                        <div class="col mb-1">Date Received: <%=i.intakeApplyDate%></div>
+                    </div>
+                </div>
+                <div class="row my-5">
+                    <div class="mb-4"><%=i.otherInfo%></div>
+                    <div class="btn btn-success mb-2">Approve</div>
+                    <div class="btn btn-danger">Deny</div>
+                </div>
+            </div>
+            <div class="col">Carousel</div>
+            </div>  
+    </section>
+    <% });}} %>
+
+</body>
+</html>

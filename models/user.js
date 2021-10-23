@@ -45,10 +45,6 @@ const userSchema = new Schema({
         type: Boolean,
         default: false,
     },
-    isEmployee: {
-        type: Boolean,
-        default: false,
-    }
 }, {timestamps: true});
 
 const Users = mongoose.model('Users', userSchema);

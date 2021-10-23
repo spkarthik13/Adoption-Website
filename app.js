@@ -19,19 +19,17 @@ app.use(express.urlencoded({extended: true}), express.json());
 const homepageRoute = require('./controller/homepage_route');
 const userProfileRoute = require('./controller/user_profile_route');
 const addBlogRoute = require('./controller/blogs_route');
-const loginRoute = require('./controller/login_route');
+const userRoute = require('./controller/user_route');
 const petIntakeRoute = require('./controller/pet_intake_route');
+const animalsRoute = require('./controller/animals_route');
 
-app.use(homepageRoute, userProfileRoute, addBlogRoute, loginRoute, petIntakeRoute);
+app.use(homepageRoute, userProfileRoute, addBlogRoute, userRoute, petIntakeRoute, animalsRoute);
 
 app.listen(process.env.PORT || 3000, () => (console.log(`Server listening on port ${process.env.PORT}.`)));
 
 /* TODO:
-User Session Information doesn't reflect on front page despite being updated before redirection.
 Add form validation
-Take sensitive data out of session
-Pass data from blog edit button to blog edit modal
-Add pagination to blog page
+Find way to pass unique blogID to edit modal
 
 Question: Is there a better way to pass data in session then attaching it to every get route
 */

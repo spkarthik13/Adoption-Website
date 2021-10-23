@@ -13,9 +13,6 @@ isMember = function(req, res, next) {
         res.redirect('/');
     }
 }
-router.get('/pet_intake', isMember, (req, res) => {
-    res.render(path.resolve('./views/pet_intake.ejs'));
-});
 
 // Define storage for multer.
 const storage = multer.diskStorage({
