@@ -37,6 +37,9 @@ const petSchema = new Schema ({
         type: String,
         required: true,
     },
+    appliedMembers: {
+        type: Array,
+    },
     otherInfo: {
         type: String,
     },

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/animals.css">
+    <title>Aaron's Adoptions Current Animals</title>
+</head>
+<body>
+    
+    <section class="bg-dark p-5 text-light">
+        <div class="container bg-dark text-dark text-center">
+            <a href="/animals" class="btn btn-primary mb">View Regular User View</a>
+        </div>
+    </section>
+
+    <!-- All Unapproved Pets -->
+    <% if (unapprovedPet.length === 0) {} else { %>
+    <% if (user && user.isAdmin) { %>
+    <% unapprovedPet.forEach((i, index) => { %>
+    <% if (index % 2 == 0) { %>
+    <section class="bg-dark p-5 text-light">
+    <% } else { %>
+    <section class="bg-light p-5 text-dark">
+    <% } %>
+        <div class="container">
+            <div class="row">
+            <div class="col">
+                <div class="row">
+                    <div class="col">
+                        <div class="mb-1">Name: <%=i.name%></div>
+                        <div class="mb-1">Age: <%=i.age%></div>
+                        <div class="mb-1">Gender: <%=i.gender%></div>
+                        <div class="mb-1">Species: <%=i.species%></div>
+                    </div>
+                    <div class="col-md">
+                        <div class="col mb-1">Breed: <%= i.breed %></div>
+                        <div class="col mb-1">Sterile: <%= i.sterile %></div>
+                        <div class="col mb-1">Weight: <%= i.weight %>lbs</div>
+                        <div class="col mb-1">Date Received: <%=i.intakeApplyDate%></div>
+                    </div>
+                </div>
+                <div class="row my-3">
+                    <div class="mb-4"><%=i.otherInfo%></div>
+                    <a href="/animals/approve_animal/<%=i._id%>" class="btn btn-success mb-2">Approve</a>
+                    <a href="/animals/delete_animal/<%=i._id%>" class="btn btn-danger">Deny</a>
+                </div>
+            </div>
+            <div class="col">
+                <div id="unapprovedPet<%=index%>" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-indicators">
+                    <% if (i.pictures.length === 0) { %>
+                    <% } else if (i.pictures.length === 1) { %>
+                          <button type="button" data-bs-target="#unapprovedPet<%=index%>" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <% } else { %>
+                          <button type="button" data-bs-target="#unapprovedPet<%=index%>" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                        <% for (let idx = 1; idx < i.pictures.length; idx++) { %>
+                            <button type="button" data-bs-target="#unapprovedPet<%=idx%>" data-bs-slide-to="<%= idx %>" aria-label="Slide <% idx + 1 %>"></button>
+                        <% }} %>
+                    </div>
+                    <% if (i.pictures.length === 0) { %>
+                    <% } else if (i.pictures.length === 1) { %>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                            <img src="/uploads/pet_intake/<%= i.pictures[0].filename %>" class="d-block w-100" alt="...">
+                            </div>
+                        </div>
+                    <% } else { %>
+                        <div class="carousel-inner">
+                          <div class="carousel-item active">
+                            <img src="/uploads/pet_intake/<%= i.pictures[0].filename %>" class="d-block w-100" alt="...">
+                          </div>
+                          <% for (let idx = 1; idx < i.pictures.length; idx++) { %>
+                            <div class="carousel-item">
+                              <img src="/uploads/pet_intake/<%= i.pictures[idx].filename %>" class="d-block w-100" alt="...">
+                            </div>
+                    <% }} %>
+                    <% if (i.pictures.length > 1) { %>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#unapprovedPet<%= index %>" data-bs-slide="prev">
+                          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                          <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#unapprovedPet<%= index %>" data-bs-slide="next">
+                          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                          <span class="visually-hidden">Next</span>
+                        </button>
+                      <% } %>
+                </div>
+            </div>
+        </div> 
+    </section>
+    <% });}} %>
+
+</body>
+</html>

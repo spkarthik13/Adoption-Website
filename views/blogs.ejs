@@ -24,7 +24,7 @@
             <div class="text-dark d-flex align-items-center">
               <h2 class="flex-grow-1"><%= b.blogTitle %></h2>
               <% if (user && user.isAdmin) { %> 
-              <div class="btn btn-secondary mx-2" id="editBlogBtn" data-bs-target="#editBlogModal" data-bs-toggle="modal">Edit Blog</div>
+              <div class="btn btn-secondary mx-2" id="<%= blogid %>" data-bs-target="#editBlogModal" data-bs-toggle="modal">Edit Blog</div>
               <a href="/blogPost/delete/<%= blogid %>" class="btn btn-danger">Delete Blog</a>
               <% } %> 
             </div>
@@ -216,8 +216,6 @@
 </html>
 
 <script>
-  $('#editBlogBtn').click( () => {
-    console.log($('#blogid').val());
-    $('#blogID').val($('#blogid').html());
-  })
+
+
 </script>
