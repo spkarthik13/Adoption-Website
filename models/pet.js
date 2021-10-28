@@ -50,6 +50,9 @@ const petSchema = new Schema ({
         type: Boolean,
         default: false,
     },
+    adminSuggestion: {
+        type: Object
+    }
 });
 
 const Pet = mongoose.model('Pets', petSchema);

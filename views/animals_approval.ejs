@@ -41,11 +41,41 @@
                         <div class="col mb-1">Date Received: <%=i.intakeApplyDate%></div>
                     </div>
                 </div>
+                <form action="/animals/approve_animal/<%=i._id%>" method="POST">
+                <div class="row my-3">
+                    <div class="col">
+                        <select class="form-select mb-3" name="sqFtSelect" aria-label="Default select example" required>
+                            <option selected value="">SqFt Recommendation</option>
+                            <option value="> 500"> > 500</option>
+                            <option value="> 1000"> > 1000</option>
+                            <option value="> 1500"> > 1500</option>
+                          </select>
+                          <select class="form-select" name="outdoorBool" aria-label="Default select example" required>
+                            <option selected value="">Outdoor Area?</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                          </select>
+                    </div>
+                    <div class="col">
+                        <select class="form-select mb-3" name="childBool" aria-label="Default select example" required>
+                            <option selected value="">Child friendly?</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                          </select>
+                          <select class="form-select" name="fencedBool" aria-label="Default select example" required>
+                            <option selected value="">Fenced In?</option>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                          </select>
+                    </div>
+                </div>
                 <div class="row my-3">
                     <div class="mb-4"><%=i.otherInfo%></div>
-                    <a href="/animals/approve_animal/<%=i._id%>" class="btn btn-success mb-2">Approve</a>
+                    <button class="btn btn-success mb-3" type="submit">Approve</button>
                     <a href="/animals/delete_animal/<%=i._id%>" class="btn btn-danger">Deny</a>
                 </div>
+            </form>
+
             </div>
             <div class="col">
                 <div id="unapprovedPet<%=index%>" class="carousel slide" data-bs-ride="carousel">

@@ -6,6 +6,7 @@ const multer = require('multer');
 const Blog = require('../models/blogs');
 const nanoid = require('nanoid');
 const fs = require('fs');
+const page = require('../pagination');
 
 let checkAdmin = function(req, res, next) {
     if (req.session.user.isAdmin) {
@@ -16,14 +17,8 @@ let checkAdmin = function(req, res, next) {
 }
 
 // Get route for adding a new blog post.
-router.get('/blogs', async (req, res) => {
-    await Blog.find({}).sort({createdAt: -1})
-    .then((result) => {
-        res.render(path.resolve('./views/blogs'), {user: req.session.user, blogs: result});
-    })
-    .catch((err) => {
-        console.log(`Error grabbing blogs from the database: ${err}`);
-    });
+router.get('/blogs', page.paginatedResults(Blog), async (req, res) => {
+    res.render(path.resolve('./views/blogs.ejs'), {user: req.session.user, blogs:res.paginatedResults})
 });
 
 // Define storage for multer.
@@ -105,6 +100,4 @@ router.get('/blogPost/delete/:id', checkAdmin, async (req, res) => {
     res.redirect('/blogs');
 });
     
-
-
 module.exports = router;

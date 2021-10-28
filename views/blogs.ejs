@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/blogs.css">
+    <link rel="stylesheet" href="/css/blogs.css"> 
     <title>Aaron's Adoptions Blog</title>
 </head>
 <body>
@@ -14,24 +14,19 @@
           <div class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#blogModal">Add a New Blog</div>
       </section>
     <% } %>
-
     <!-- Light Blog Sections -->
-    <% blogs.forEach((b, index) => { %>
+    <% blogs.results.forEach((b, index) => { %>
     <% if (index % 2 === 0) { %>
-        <% const blogid = b._id %>
         <section class="bg-light p-5">
         <div class="container d-flex-column w-50">
             <div class="text-dark d-flex align-items-center">
               <h2 class="flex-grow-1"><%= b.blogTitle %></h2>
               <% if (user && user.isAdmin) { %> 
-              <div class="btn btn-secondary mx-2" id="<%= blogid %>" data-bs-target="#editBlogModal" data-bs-toggle="modal">Edit Blog</div>
-              <a href="/blogPost/delete/<%= blogid %>" class="btn btn-danger">Delete Blog</a>
+              <div class="btn btn-secondary mx-2" data-bs-target="#editBlogModal" data-bs-toggle="modal">Edit Blog</div>
+              <a href="/blogPost/delete/<%= b._id %>" class="btn btn-danger">Delete Blog</a>
               <% } %> 
             </div>
             <% const createDate = new Date (b.createdAt).toDateString(); %>
-            <% if (user && user.isAdmin) { %> 
-              <div> <%= blogid %> </div>
-            <% } %> 
             <div><%= createDate %> </div>
             <div class="my-5 justify-content-between"> 
               <div class="text-start my-5"> <%= b.blogText %> </div>
@@ -79,24 +74,19 @@
             </div>
         </div>
     </section>
-
     <!-- Dark Blog Sections -->
     <% } else { %>
-      <% const blogid = b._id %>
       <section class="bg-dark text-light p-5">
       <div class="container d-flex-column w-50">
           <div class="text-dark d-flex align-items-center">
             <h2 class="flex-grow-1 text-light"><%= b.blogTitle %></h2>
-            <% if (user && user.isAdmin) { %> 
-            <div class="btn btn-secondary mx-2" id="editBlogBtn" data-bs-target="#editBlogModal" data-bs-toggle="modal">Edit Blog</div>
-            <a href="/blogPost/delete/<%= blogid %>" class="btn btn-danger">Delete Blog</a>
-            <% } %> 
+            <% if (user && user.isAdmin) { %>       
+            <div class="btn btn-secondary mx-2" id="editBlogBtn" value='<%= blogs._id %>' data-bs-target="#editBlogModal" data-bs-toggle="modal">Edit Blog</div>
+            <a href="/blogPost/delete/<%= b._id %>" class="btn btn-danger">Delete Blog</a>
+            <% } %>
           </div>
             <% const createDate = new Date (b.createdAt).toDateString(); %>
             <div><%= createDate %> </div>
-            <% if (user && user.isAdmin) { %> 
-              <div> <%= blogid %> </div>
-            <% } %> 
             <div class="my-5 justify-content-between"> 
               <div class="text-start my-5"> <%= b.blogText %> </div>
               <div id="carouselDark<%= index %>" class="carousel slide mb-3" data-bs-ride="carousel">
@@ -212,10 +202,27 @@
       </div>
   </div>
 
+  <section class="bg-light mt-3">
+    <div class="container d-flex justify-content-center">
+      <nav aria-label="Page navigation example">
+        <ul class="pagination text-dark">
+          <% if (blogs.previous.page > 0) { %> 
+          <li class="page-item"><a class="page-link" href="/blogs?page=<%=blogs.previous.page%>&limit=3">Previous</a></li>
+          <% } else { %>
+          <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+          <% } %> 
+          <% if (blogs.next.page && (blogs.results.length === 3)) { %>
+            <li class="page-item"><a class="page-link" href="/blogs?page=<%=blogs.next.page%>&limit=3">Next</a></li>
+          <% } else { %>
+            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+          <% } %> 
+        </ul>
+      </nav>
+    </div> 
+  </section>
+
 </body>
 </html>
 
 <script>
-
-
 </script>

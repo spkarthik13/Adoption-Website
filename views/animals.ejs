@@ -5,15 +5,51 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/animals.css">
+    
     <title>Current Animals</title>
 </head>
 <body>
 
     <section class="bg-dark p-5 text-light">
-        <div class="container bg-light text-dark">
-            Filter buttons placeholder
+        <div class="container">
+            <ul class="nav nav-pills d-flex justify-content-center gap-3">
+                <li class="nav-item dropdown">
+                  <a class="nav-link active dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Species</a>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Dog</a></li>
+                    <li><a class="dropdown-item" href="#">Cat</a></li>
+                    <li><a class="dropdown-item" href="#">Other</a></li>
+                  </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link active dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Gender</a>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="#">Male</a></li>
+                      <li><a class="dropdown-item" href="#">Female</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link active dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Weight</a>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="#">> 10 Pounds</a></li>
+                      <li><a class="dropdown-item" href="#">> 10, < 25 Pounds</a></li>
+                      <li><a class="dropdown-item" href="#">> 25, < 50 Pounds</a></li>
+                      <li><a class="dropdown-item" href="#">> 50 Pounds</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link active dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Age</a>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="#">0-2</a></li>
+                      <li><a class="dropdown-item" href="#">2-5</a></li>
+                      <li><a class="dropdown-item" href="#">5-10</a></li>
+                      <li><a class="dropdown-item" href="#">10+</a></li>
+                    </ul>
+                </li>
+            </ul>
         </div>
     </section>
+
     <% if (approvedPet.length === 0) {} else { %>
         <% if (user && user.isAdmin) { %>
         <% approvedPet.forEach((i, index) => { %>
@@ -26,6 +62,8 @@
                 <div class="row">
                 <div class="col">
                     <div class="row">
+                        <div class="mb-1">Animal Information</div>
+                        <hr>
                         <div class="col">
                             <div class="mb-1">Name: <%=i.name%></div>
                             <div class="mb-1">Age: <%=i.age%></div>
@@ -40,16 +78,28 @@
                         </div>
                     </div>
                     <div class="mb-4"><%=i.otherInfo%></div>
-                    <div class="row my-5 align-items-end">
+                    <div class="row">
+                        <div class="mb-1">Facility's Recommendations</div>
+                        <hr>
+                        <div class="col">
+                            <div class="mb-1">Household Square Feet: <%= i.adminSuggestion[0].sqFeet %></div>
+                            <div class="mb-1">Household Outdoor Area: <%= i.adminSuggestion[0].outdoor %></div>
+                        </div>
+                        <div class="col-md">
+                            <div class="col mb-1">Suitable Around Children: <%= i.adminSuggestion[0].children %></div>
+                            <div class="col mb-1">Fenced In Outdoor Area: <%= i.adminSuggestion[0].fenced %></div>
+                        </div>
+                    </div>
+                    <div class="row my-4">
                         <% if (i.appliedMembers.includes(user._id)) { %> 
                         <button href="#" class="btn btn-secondary mb-2" disabled>You have already applied to adopt this animal</button>
                         <a href="/animals/remove_animal_application/<%=i._id%>" class="btn btn-danger mb-2">Remove Adoption Application</a>
                         <% } else { %> 
-                        <a href="/animals/apply_animal/<%=i._id%>" class="btn btn-secondary mb-2">Apply to Adopt</a>
+                        <a href="/animals/apply_animal/<%=i._id%>" class="btn btn-success mb-2">Apply to Adopt</a>
                         <% } %> 
                     </div>
                 </div>
-                <div class="col">
+                <div class="col-sm my-3">
                     <div id="unapprovedPet<%=index%>" class="carousel slide" data-bs-ride="carousel">
                         <div class="carousel-indicators">
                         <% if (i.pictures.length === 0) { %>

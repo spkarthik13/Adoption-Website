@@ -29,7 +29,10 @@ app.listen(process.env.PORT || 3000, () => (console.log(`Server listening on por
 
 /* TODO:
 Add form validation
-Find way to pass unique blogID to edit modal
+Blog edit functionality
+Filter features for animal viewing
+Pagination on animal page
+
 
 Question: Is there a better way to pass data in session then attaching it to every get route
 */

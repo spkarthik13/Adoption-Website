@@ -33,6 +33,7 @@ router.get('/animals', checkUser, (req, res) => {
     
 });
 
+
 router.get('/animals/admin_approval', checkAdmin, async (req, res) => {
     const grabPets = Pet.find({}).sort()
     .then(result => {
@@ -48,13 +49,22 @@ router.get('/animals/admin_approval', checkAdmin, async (req, res) => {
         console.log(`Error grabbing pets from database: ${err}`);
         res.redirect('/animals/admin_approval');
     })
-
+    
 })
 
-router.get('animals/approve_animal/:id', checkAdmin, async (req, res) => {
-    const update = {inventoryApproved: true};
+router.post('/animals/approve_animal/:id', checkAdmin, async (req, res) => {
+    const {sqFtSelect, outdoorBool, childBool, fencedBool} = req.body;
+    const update = {
+        inventoryApproved: true,
+        adminSuggestion: {
+            sqFeet: sqFtSelect,
+            outdoor: outdoorBool,
+            children: childBool,
+            fenced: fencedBool,
+        }
+    }
     await Pet.findByIdAndUpdate(req.params.id, update);
-    res.redirect('/approve_animal');
+    res.redirect('/animals/admin_approval');
 });
 
 router.get('/animals/delete_animal/:id', checkAdmin, async (req, res) => {
@@ -63,9 +73,9 @@ router.get('/animals/delete_animal/:id', checkAdmin, async (req, res) => {
         for (let i = 0; i < result.pictures.length; i++) {
             fs.unlink(path.resolve('./public/uploads/pet_intake/' + result.pictures[i].filename), (err => {
                 if (err) { 
-                    console.log(`Error deleting blog file directory: ${err}`);
+                    console.log(`Error deleting animal file directory: ${err}`);
                 } else {
-                    console.log(`Successfully deleted file related to blog post: ${result.pictures[i].filename}`);
+                    console.log(`Successfully deleted file related to animal: ${result.pictures[i].filename}`);
                 }})
             )
         }})
