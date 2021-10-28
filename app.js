@@ -28,11 +28,14 @@ app.use(homepageRoute, userProfileRoute, addBlogRoute, userRoute, petIntakeRoute
 app.listen(process.env.PORT || 3000, () => (console.log(`Server listening on port ${process.env.PORT}.`)));
 
 /* TODO:
-Add form validation
 Blog edit functionality
-Filter features for animal viewing
 Pagination on animal page
+Animal filter doesn't like multiple ages due to input cleaning
 
 
 Question: Is there a better way to pass data in session then attaching it to every get route
+
+Things I learned that I would do different in the next project:
+    1. Condense common object attributes into JSON objects in database instead of defining their own attribute individually.
+    2. Be alot more strict on Schema set up, values stored with unconventional characters were a headache to use in filtering down the road.
 */

@@ -5,6 +5,7 @@ const router = express.Router();
 const path = require('path');
 const Pet = require('../models/pet');
 const fs = require('fs');
+const pageination = require('../pagination');
 
 function checkUser(req, res, next) {
     if (req.session.user) {
@@ -22,15 +23,9 @@ function checkAdmin(req, res, next) {
     }
 }
 
-router.get('/animals', checkUser, (req, res) => {
-    const grabPets = Pet.find({inventoryApproved: true})
-    .then(result => {
-        res.render(path.resolve('./views/animals'), {user: req.session.user, approvedPet: result});
-    })
-    .catch(err => {
-        console.log(`Error grabbing approved pets from the database ${err}`);
-    })
-    
+router.get('/animals', checkUser, pageination.paginatedFilteredResults(Pet), (req, res) => {
+    const approvedPet = res.paginatedResults;
+    res.render(path.resolve('./views/animals'), {user: req.session.user, approvedPet: approvedPet,  currentURL: req.url});
 });
 
 

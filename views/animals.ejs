@@ -16,35 +16,38 @@
                 <li class="nav-item dropdown">
                   <a class="nav-link active dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Species</a>
                   <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Dog</a></li>
-                    <li><a class="dropdown-item" href="#">Cat</a></li>
-                    <li><a class="dropdown-item" href="#">Other</a></li>
+                    <li><a class="dropdown-item" href="<%= currentURL %>&species=Dog">Dog</a></li>
+                    <li><a class="dropdown-item" href="<%= currentURL %>&species=Cat">Cat</a></li>
+                    <li><a class="dropdown-item" href="<%= currentURL %>&species=Other">Other</a></li>
                   </ul>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link active dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Gender</a>
                     <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="#">Male</a></li>
-                      <li><a class="dropdown-item" href="#">Female</a></li>
+                      <li><a class="dropdown-item" href="<%= currentURL %>&gender=Male">Male</a></li>
+                      <li><a class="dropdown-item" href="<%= currentURL %>&gender=Female">Female</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link active dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Weight</a>
                     <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="#">> 10 Pounds</a></li>
-                      <li><a class="dropdown-item" href="#">> 10, < 25 Pounds</a></li>
-                      <li><a class="dropdown-item" href="#">> 25, < 50 Pounds</a></li>
-                      <li><a class="dropdown-item" href="#">> 50 Pounds</a></li>
+                      <li><a class="dropdown-item" href="<%= currentURL %>&weight=<_10_Pounds">< 10 Pounds</a></li>
+                      <li><a class="dropdown-item" href="<%= currentURL %>&weight=>_10_<_25_Pounds">> 10, < 25 Pounds</a></li>
+                      <li><a class="dropdown-item" href="<%= currentURL %>&weight=>_25_<_50_Pounds">> 25, < 50 Pounds</a></li>
+                      <li><a class="dropdown-item" href="<%= currentURL %>&weight=>_50_Pounds">> 50 Pounds</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link active dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Age</a>
                     <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="#">0-2</a></li>
-                      <li><a class="dropdown-item" href="#">2-5</a></li>
-                      <li><a class="dropdown-item" href="#">5-10</a></li>
-                      <li><a class="dropdown-item" href="#">10+</a></li>
+                      <li><a class="dropdown-item" href="<%= currentURL %>&age=0-2">0-2</a></li>
+                      <li><a class="dropdown-item" href="<%= currentURL %>&age=2-5">2-5</a></li>
+                      <li><a class="dropdown-item" href="<%= currentURL %>&age=5-10">5-10</a></li>
+                      <li><a class="dropdown-item" href="<%= currentURL %>&age=10">10+</a></li>
                     </ul>
+                </li>
+                <li class="nav-item">
+                    <a href="/animals?page=1&limit=3"><div class="btn btn-secondary">Reset Filters</div></a>
                 </li>
             </ul>
         </div>
@@ -52,7 +55,7 @@
 
     <% if (approvedPet.length === 0) {} else { %>
         <% if (user && user.isAdmin) { %>
-        <% approvedPet.forEach((i, index) => { %>
+        <% approvedPet.results.forEach((i, index) => { %>
         <% if (index % 2 == 0) { %>
         <section class="bg-dark p-5 text-light">
         <% } else { %>
@@ -82,12 +85,12 @@
                         <div class="mb-1">Facility's Recommendations</div>
                         <hr>
                         <div class="col">
-                            <div class="mb-1">Household Square Feet: <%= i.adminSuggestion[0].sqFeet %></div>
-                            <div class="mb-1">Household Outdoor Area: <%= i.adminSuggestion[0].outdoor %></div>
+                            <div class="mb-1">Household Square Feet: <%= i.adminSuggestion.sqFeet %></div>
+                            <div class="mb-1">Household Outdoor Area: <%= i.adminSuggestion.outdoor %></div>
                         </div>
                         <div class="col-md">
-                            <div class="col mb-1">Suitable Around Children: <%= i.adminSuggestion[0].children %></div>
-                            <div class="col mb-1">Fenced In Outdoor Area: <%= i.adminSuggestion[0].fenced %></div>
+                            <div class="col mb-1">Suitable Around Children: <%= i.adminSuggestion.children %></div>
+                            <div class="col mb-1">Fenced In Outdoor Area: <%= i.adminSuggestion.fenced %></div>
                         </div>
                     </div>
                     <div class="row my-4">
