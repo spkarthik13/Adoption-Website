@@ -39,7 +39,6 @@ const upload = multer({
 
 // Post route for adding a new blog.
 router.post('/add_blog_post', checkAdmin, upload.array('formFileMultiple'), (req, res) => {
-    console.log(req.body);
     let blog = new Blog({
         blogTitle: req.body.blogTitle,
         blogText: req.body.blogText,
@@ -54,30 +53,33 @@ router.post('/add_blog_post', checkAdmin, upload.array('formFileMultiple'), (req
             console.log(`Error saving blog to the database: ${error}`);
         });
 
-    res.redirect('/blogs');
+    res.redirect('/blogs?page=1&limit=3');
 });
 
-// Get route which brings in blog to "edit blog page".
-router.get('/blogPost/:id', checkAdmin, async (req, res) => {
-    const blogPost = await Blog.findById({_id: req.params.id});
-    res.render(path.resolve('./views/addBlogPost'), {user: req.session.user, blog: blogPost});
+router.get('/blogPost/edit/:id', checkAdmin, (req, res) => {
+    Blog.findById({_id: req.params.id})
+    .then((result) => {
+        res.render(path.resolve('./views/edit_blog.ejs'), {user: req.session.user, blog: result});
+    })
+    .catch(err => {
+        console.log(`Error finding blog to edit`);
+    })
 });
 
 // PUT route for blogs.
-router.post('/blogPost/edit/:id', checkAdmin, upload.array('formFileMultiple', 5),(req, res) => {
+router.post('/blogPost/edit/:id', checkAdmin, upload.array('formFileMultiple', 5), async (req, res) => {
+    console.log(req.body);
     const updateBlog = {
-        blogTitle: req.body.titleInput,
-        blogText: req.body.textareaInput,
+        blogTitle: req.body.blogTitle,
+        blogText: req.body.blogText,
         blogPictures: req.files
     };
-    Blog.findByIdAndUpdate({_id: req.params.id}, updateBlog, (err) => {
-        if (err) {
-            console.log(`Error updating blog: ${err}`);
-        } else {
-            console.log('Blog successfully updated.');
-            res.redirect('/blogs');
-        }
-    });
+    await Blog.findByIdAndUpdate({_id: req.params.id}, updateBlog)
+    .then(result => console.log(`Blog successfully updated: ${result}`))
+    .catch(err => console.log(`Error updating blog: ${err}`)
+    )
+
+    res.redirect('/blogs?page=1&limit=3');
 });
 
 // Delete route for blogs.
@@ -97,7 +99,7 @@ router.get('/blogPost/delete/:id', checkAdmin, async (req, res) => {
         if (err) {
             console.log(`Error fetching blog from database: ${err}`);
         }})
-    res.redirect('/blogs');
+    res.redirect('/blogs?page=1&limit=3');
 });
     
 module.exports = router;

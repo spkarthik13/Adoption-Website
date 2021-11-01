@@ -220,13 +220,10 @@
                                 Animal Age:
                             </div>
                             <div class="col">
-                                <select class="form-select" name="animalAge" required>
-                                <option selected></option>
-                                <option value="0-2">0-2</option>
-                                <option value="2-5">2-5</option>
-                                <option value="5-10">5-10</option>
-                                <option value="10">10+</option>
-                                </select>
+                                <div class="input-group mb-3">
+                                    <input type="number" class="form-control" name="animalAge" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                    <span class="input-group-text" id="basic-addon2">years</span>
+                                  </div>
                             </div>
                         </div>
                         <div class="row m-3 align-items-center">
@@ -235,9 +232,9 @@
                             </div>
                             <div class="col">
                                 <select name="animalGender" class="form-select" required>
-                                <option selected></option>
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
+                                    <option selected></option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
                                 </select>
                             </div>
                         </div>
@@ -247,7 +244,7 @@
                             </div>
                             <div class="col">
                                 <select name="animalSpecies" class="form-select" required>
-                                <option selected></option>
+                                    <option selected></option>
                                     <option value="Dog">Dog</option>
                                     <option value="Cat">Cat</option>
                                     <option value="Other">Other</option>
@@ -280,13 +277,10 @@
                                 Animal Weight:
                             </div>
                             <div class="col">
-                                <select name="animalWeight" class="form-select" required>
-                                    <option selected></option>
-                                    <option value="< 10">Less Than 10lbs</option>
-                                    <option value="> 10, < 25">More than 10, less than 25lbs</option>
-                                    <option value="> 25, < 50">Greater than 25, less then 50lbs</option>
-                                    <option value="> 50">Greater than 50lbs</option>
-                                </select>
+                                <div class="input-group mb-3">
+                                    <input type="number" name="animalWeight" class="form-control" aria-describedby="basic-addon2">
+                                    <span class="input-group-text" id="basic-addon2">lbs</span>
+                                  </div>
                             </div>
                             <div class="row m-0 my-3 align-items-center">
                                     <textarea name="animalBio" cols="30" rows="5" placeholder="Please let us know anything else you think is relevant to the medical history, temperment, attitude or other characteristics of the animal."></textarea>

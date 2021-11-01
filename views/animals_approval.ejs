@@ -11,7 +11,7 @@
     
     <section class="bg-dark p-5 text-light">
         <div class="container bg-dark text-dark text-center">
-            <a href="/animals" class="btn btn-primary mb">View Regular User View</a>
+            <a href="/animals?page=1&limit=3" class="btn btn-primary mb">View Regular User View</a>
         </div>
     </section>
 
@@ -29,16 +29,16 @@
             <div class="col">
                 <div class="row">
                     <div class="col">
-                        <div class="mb-1">Name: <%=i.name%></div>
-                        <div class="mb-1">Age: <%=i.age%></div>
-                        <div class="mb-1">Gender: <%=i.gender%></div>
-                        <div class="mb-1">Species: <%=i.species%></div>
+                        <div class="mb-1">Name: <%=i.attribute.name%></div>
+                        <div class="mb-1">Age: <%=i.attribute.age%></div>
+                        <div class="mb-1">Gender: <%=i.attribute.gender%></div>
+                        <div class="mb-1">Species: <%=i.attribute.species%></div>
                     </div>
                     <div class="col-md">
-                        <div class="col mb-1">Breed: <%= i.breed %></div>
-                        <div class="col mb-1">Sterile: <%= i.sterile %></div>
-                        <div class="col mb-1">Weight: <%= i.weight %>lbs</div>
-                        <div class="col mb-1">Date Received: <%=i.intakeApplyDate%></div>
+                        <div class="col mb-1">Breed: <%= i.attribute.breed %></div>
+                        <div class="col mb-1">Sterile: <%= i.attribute.sterile %></div>
+                        <div class="col mb-1">Weight: <%= i.attribute.weight %>lbs</div>
+                        <div class="col mb-1">Date Received: <%=i.attribute.intakeApplyDate%></div>
                     </div>
                 </div>
                 <form action="/animals/approve_animal/<%=i._id%>" method="POST">
@@ -80,33 +80,33 @@
             <div class="col">
                 <div id="unapprovedPet<%=index%>" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-indicators">
-                    <% if (i.pictures.length === 0) { %>
-                    <% } else if (i.pictures.length === 1) { %>
+                    <% if (i.attribute.pictures.length === 0) { %>
+                    <% } else if (i.attribute.pictures.length === 1) { %>
                           <button type="button" data-bs-target="#unapprovedPet<%=index%>" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
                     <% } else { %>
                           <button type="button" data-bs-target="#unapprovedPet<%=index%>" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                        <% for (let idx = 1; idx < i.pictures.length; idx++) { %>
+                        <% for (let idx = 1; idx < i.attribute.pictures.length; idx++) { %>
                             <button type="button" data-bs-target="#unapprovedPet<%=idx%>" data-bs-slide-to="<%= idx %>" aria-label="Slide <% idx + 1 %>"></button>
                         <% }} %>
                     </div>
-                    <% if (i.pictures.length === 0) { %>
-                    <% } else if (i.pictures.length === 1) { %>
+                    <% if (i.attribute.pictures.length === 0) { %>
+                    <% } else if (i.attribute.pictures.length === 1) { %>
                         <div class="carousel-inner">
                             <div class="carousel-item active">
-                            <img src="/uploads/pet_intake/<%= i.pictures[0].filename %>" class="d-block w-100" alt="...">
+                            <img src="/uploads/pet_intake/<%= i.attribute.pictures[0].filename %>" class="d-block w-100" alt="...">
                             </div>
                         </div>
                     <% } else { %>
                         <div class="carousel-inner">
                           <div class="carousel-item active">
-                            <img src="/uploads/pet_intake/<%= i.pictures[0].filename %>" class="d-block w-100" alt="...">
+                            <img src="/uploads/pet_intake/<%= i.attribute.pictures[0].filename %>" class="d-block w-100" alt="...">
                           </div>
-                          <% for (let idx = 1; idx < i.pictures.length; idx++) { %>
+                          <% for (let idx = 1; idx < i.attribute.pictures.length; idx++) { %>
                             <div class="carousel-item">
-                              <img src="/uploads/pet_intake/<%= i.pictures[idx].filename %>" class="d-block w-100" alt="...">
+                              <img src="/uploads/pet_intake/<%= i.attribute.pictures[idx].filename %>" class="d-block w-100" alt="...">
                             </div>
                     <% }} %>
-                    <% if (i.pictures.length > 1) { %>
+                    <% if (i.attribute.pictures.length > 1) { %>
                         <button class="carousel-control-prev" type="button" data-bs-target="#unapprovedPet<%= index %>" data-bs-slide="prev">
                           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                           <span class="visually-hidden">Previous</span>

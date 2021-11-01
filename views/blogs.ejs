@@ -22,7 +22,7 @@
             <div class="text-dark d-flex align-items-center">
               <h2 class="flex-grow-1"><%= b.blogTitle %></h2>
               <% if (user && user.isAdmin) { %> 
-              <div class="btn btn-secondary mx-2" data-bs-target="#editBlogModal" data-bs-toggle="modal">Edit Blog</div>
+                <a href="/blogPost/edit/<%= b._id %>" class="btn btn-secondary mx-2">Edit Blog</a>       
               <a href="/blogPost/delete/<%= b._id %>" class="btn btn-danger">Delete Blog</a>
               <% } %> 
             </div>
@@ -80,9 +80,9 @@
       <div class="container d-flex-column w-50">
           <div class="text-dark d-flex align-items-center">
             <h2 class="flex-grow-1 text-light"><%= b.blogTitle %></h2>
-            <% if (user && user.isAdmin) { %>       
-            <div class="btn btn-secondary mx-2" id="editBlogBtn" value='<%= blogs._id %>' data-bs-target="#editBlogModal" data-bs-toggle="modal">Edit Blog</div>
-            <a href="/blogPost/delete/<%= b._id %>" class="btn btn-danger">Delete Blog</a>
+            <% if (user && user.isAdmin) { %>
+              <a href="/blogPost/edit/<%= b._id %>" class="btn btn-secondary mx-2">Edit Blog</a>       
+              <a href="/blogPost/delete/<%= b._id %>" class="btn btn-danger">Delete Blog</a>
             <% } %>
           </div>
             <% const createDate = new Date (b.createdAt).toDateString(); %>
@@ -165,42 +165,6 @@
           </div>
         </div>
     </div>
-
-    <!-- Edit blog modal -->
-    <div class="modal fade" id="editBlogModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="editBlogModalLabel">Edit a Blog Post</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-              <form action="/add_blog_post" method="post" enctype="multipart/form-data">
-                    <div class="d-flex justify-content-between mb-3">
-                      <label for="exampleFormControlInput1" class="form-label align-self-end">Blog Title</label>
-                      <input type="text" name='blogTitle' class="form-control w-75" id="exampleFormControlInput1" required>
-                    </div>
-                    <div class="d-flex justify-content-between mb-3">
-                      <label for="blogID" class="form-label align-self-end">Blog Object ID</label>
-                      <input type="text" name='blogID' id="blogID" class="form-control w-75" required disabled>
-                    </div>
-                    <div class="d-flex justify-content-between mb-3">
-                      <label for="exampleFormControlInput1" class="form-label align-self-center">Blog Text Body</label>
-                      <textarea class="form-control w-75" id="blogText" name='blogText' id="exampleFormControlInput1" rows="3" required></textarea>
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                      <label for="formFileMultiple" class="form-label">File Input</label>
-                      <input class="form-control w-75 h-75" type="file" id="formFileMultiple" name="formFileMultiple" multiple>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  <button type="submit" class="btn btn-primary">Save changes</button>
-                </div>
-              </form>
-        </div>
-      </div>
-  </div>
 
   <section class="bg-light mt-3">
     <div class="container d-flex justify-content-center">

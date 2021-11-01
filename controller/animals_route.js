@@ -1,5 +1,4 @@
 // Imports.
-
 const express = require('express');
 const router = express.Router();
 const path = require('path');
@@ -19,7 +18,7 @@ function checkAdmin(req, res, next) {
     if (req.session.user && req.session.user.isAdmin) {
         next();
     } else {
-        res.redirect('/animals');
+        res.redirect('/animals?page=1&limit=3');
     }
 }
 
@@ -28,13 +27,12 @@ router.get('/animals', checkUser, pageination.paginatedFilteredResults(Pet), (re
     res.render(path.resolve('./views/animals'), {user: req.session.user, approvedPet: approvedPet,  currentURL: req.url});
 });
 
-
 router.get('/animals/admin_approval', checkAdmin, async (req, res) => {
     const grabPets = Pet.find({}).sort()
     .then(result => {
         const unapprovedPets = new Array;
         result.filter(pet => {
-            if (pet.inventoryApproved === false) {
+            if (pet.adminInfo.inventoryApproved === false) {
                 unapprovedPets.unshift(pet);
             }
         })
@@ -58,7 +56,7 @@ router.post('/animals/approve_animal/:id', checkAdmin, async (req, res) => {
             fenced: fencedBool,
         }
     }
-    await Pet.findByIdAndUpdate(req.params.id, update);
+    await Pet.findByIdAndUpdate(req.params.id, {'$set':{'adminInfo': update}});
     res.redirect('/animals/admin_approval');
 });
 
@@ -78,7 +76,7 @@ router.get('/animals/delete_animal/:id', checkAdmin, async (req, res) => {
         if (err) {
             console.log(`Error fetching blog from database: ${err}`);
         }})
-    res.redirect('/animals');
+    res.redirect('/animals/admin_approval');
 });
 
 // Apply to adopt animal.
@@ -107,7 +105,7 @@ router.get('/animals/apply_animal/:id', checkAdmin, async (req, res) => {
             console.log(`Error applying user for pet adoption: ${error}`);
         })
     }
-    res.redirect('/animals');
+    res.redirect('/animals?page=1&limit=3');
 });
 
 // Remove adoption application.
@@ -120,6 +118,6 @@ router.get('/animals/remove_animal_application/:id', checkAdmin, async (req, res
         console.log(`Error grabbing the pet in the database: ${error}`);
     })
 
-    res.redirect('/animals');
+    res.redirect('/animals?page=1&limit=3');
 })
 module.exports = router;

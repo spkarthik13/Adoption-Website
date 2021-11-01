@@ -2,13 +2,14 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const date = new Date();
-const petSchema = new Schema ({
+
+const attributeSchema = mongoose.Schema({
     name: {
         type: String,
         required: true
     },
     age: {
-        type: String,
+        type: Number,
         required: true
     },
     gender: {
@@ -20,14 +21,26 @@ const petSchema = new Schema ({
         required: true
     },
     breed: {
-        type: String
+        type: String,
+        required: true,
     },
     sterile: {
         type: String,
+        required: true,
     },
     weight: {
+        type: Number,
+        required: true,
+    },
+    otherInfo: {
         type: String,
     },
+    pictures: {
+        type: Array,
+    },
+})
+
+const intakeSchema = mongoose.Schema({
     intakeApplyDate: {
         type: String,
         default: date.getFullYear() + "/" + (date.getMonth() + 1) + "/" + date.getDate(),
@@ -37,13 +50,10 @@ const petSchema = new Schema ({
         type: String,
         required: true,
     },
+})
+
+const adminInfoSchema = mongoose.Schema({
     appliedMembers: {
-        type: Array,
-    },
-    otherInfo: {
-        type: String,
-    },
-    pictures: {
         type: Array,
     },
     inventoryApproved: {
@@ -51,9 +61,26 @@ const petSchema = new Schema ({
         default: false,
     },
     adminSuggestion: {
-        type: Object
+        type: Object,
+        default: {},
     }
 });
+
+const petSchema = new Schema ({
+    attribute: {
+        type: attributeSchema,
+        required: true
+    },
+    intake: {
+        type: intakeSchema,
+        rquired: true
+    },
+    adminInfo: {
+        type: adminInfoSchema,
+        require: true, 
+    },
+});
+
 
 const Pet = mongoose.model('Pets', petSchema);
 module.exports = Pet;

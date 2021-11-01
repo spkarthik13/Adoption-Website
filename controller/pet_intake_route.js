@@ -5,6 +5,7 @@ const router = express.Router();
 const Pet = require('../models/pet');
 const multer = require('multer');
 const nanoid = require('nanoid');
+const mongoose = require('mongoose');
 
 isMember = function(req, res, next) {
     if (req.session.user) {
@@ -35,16 +36,19 @@ router.post('/pet_intake', isMember, upload.array('formFileMultiple'), (req, res
             animalSpecies, animalBreed, animalReproduction, 
             animalWeight, animalBio } = req.body;
     const newPet = new Pet({
-        name: animalName,
+        attribute: { name: animalName,
         age: animalAge,
         gender: animalGender,
         species: animalSpecies,
         breed: animalBreed,
         sterile: animalReproduction,
         weight: animalWeight,
-        intakeMember: req.session.user._id,
         otherInfo: animalBio,
-        pictures: req.files,
+        pictures: req.files },
+        intake: {
+            intakeMember: mongoose.Types.ObjectId(req.session.user._id),
+        },
+        adminInfo:{},
     });
 
     newPet.save()

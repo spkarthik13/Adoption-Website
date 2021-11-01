@@ -31,10 +31,10 @@
                 <li class="nav-item dropdown">
                     <a class="nav-link active dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">Weight</a>
                     <ul class="dropdown-menu">
-                      <li><a class="dropdown-item" href="<%= currentURL %>&weight=<_10_Pounds">< 10 Pounds</a></li>
-                      <li><a class="dropdown-item" href="<%= currentURL %>&weight=>_10_<_25_Pounds">> 10, < 25 Pounds</a></li>
-                      <li><a class="dropdown-item" href="<%= currentURL %>&weight=>_25_<_50_Pounds">> 25, < 50 Pounds</a></li>
-                      <li><a class="dropdown-item" href="<%= currentURL %>&weight=>_50_Pounds">> 50 Pounds</a></li>
+                      <li><a class="dropdown-item" href="<%= currentURL %>&weight=<10">< 10 Pounds</a></li>
+                      <li><a class="dropdown-item" href="<%= currentURL %>&weight=>10">> 10 Pounds</a></li>
+                      <li><a class="dropdown-item" href="<%= currentURL %>&weight=>25">> 25 Pounds</a></li>
+                      <li><a class="dropdown-item" href="<%= currentURL %>&weight=>50">> 50 Pounds</a></li>
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
@@ -68,16 +68,16 @@
                         <div class="mb-1">Animal Information</div>
                         <hr>
                         <div class="col">
-                            <div class="mb-1">Name: <%=i.name%></div>
-                            <div class="mb-1">Age: <%=i.age%></div>
-                            <div class="mb-1">Gender: <%=i.gender%></div>
-                            <div class="mb-1">Species: <%=i.species%></div>
+                            <div class="mb-1">Name: <%=i.attribute.name%></div>
+                            <div class="mb-1">Age: <%=i.attribute.age%></div>
+                            <div class="mb-1">Gender: <%=i.attribute.gender%></div>
+                            <div class="mb-1">Species: <%=i.attribute.species%></div>
                         </div>
                         <div class="col-md mb-3">
-                            <div class="col mb-1">Breed: <%= i.breed %></div>
-                            <div class="col mb-1">Sterile: <%= i.sterile %></div>
-                            <div class="col mb-1">Weight: <%= i.weight %>lbs</div>
-                            <div class="col mb-1">Date Received: <%=i.intakeApplyDate%></div>
+                            <div class="col mb-1">Breed: <%= i.attribute.breed %></div>
+                            <div class="col mb-1">Sterile: <%= i.attribute.sterile %></div>
+                            <div class="col mb-1">Weight: <%= i.attribute.weight %> lbs</div>
+                            <div class="col mb-1">Date Received: <%=i.attribute.intakeApplyDate%></div>
                         </div>
                     </div>
                     <div class="mb-4"><%=i.otherInfo%></div>
@@ -85,16 +85,16 @@
                         <div class="mb-1">Facility's Recommendations</div>
                         <hr>
                         <div class="col">
-                            <div class="mb-1">Household Square Feet: <%= i.adminSuggestion.sqFeet %></div>
-                            <div class="mb-1">Household Outdoor Area: <%= i.adminSuggestion.outdoor %></div>
+                            <div class="mb-1">Household Square Feet: <%= i.adminInfo.adminSuggestion.sqFeet %></div>
+                            <div class="mb-1">Household Outdoor Area: <%= i.adminInfo.adminSuggestion.outdoor %></div>
                         </div>
                         <div class="col-md">
-                            <div class="col mb-1">Suitable Around Children: <%= i.adminSuggestion.children %></div>
-                            <div class="col mb-1">Fenced In Outdoor Area: <%= i.adminSuggestion.fenced %></div>
+                            <div class="col mb-1">Suitable Around Children: <%= i.adminInfo.adminSuggestion.children %></div>
+                            <div class="col mb-1">Fenced In Outdoor Area: <%= i.adminInfo.adminSuggestion.fenced %></div>
                         </div>
                     </div>
                     <div class="row my-4">
-                        <% if (i.appliedMembers.includes(user._id)) { %> 
+                        <% if (i.adminInfo.appliedMembers.includes(user._id)) { %> 
                         <button href="#" class="btn btn-secondary mb-2" disabled>You have already applied to adopt this animal</button>
                         <a href="/animals/remove_animal_application/<%=i._id%>" class="btn btn-danger mb-2">Remove Adoption Application</a>
                         <% } else { %> 
@@ -105,33 +105,33 @@
                 <div class="col-sm my-3">
                     <div id="unapprovedPet<%=index%>" class="carousel slide" data-bs-ride="carousel">
                         <div class="carousel-indicators">
-                        <% if (i.pictures.length === 0) { %>
-                        <% } else if (i.pictures.length === 1) { %>
+                        <% if (i.attribute.pictures.length === 0) { %>
+                        <% } else if (i.attribute.pictures.length === 1) { %>
                               <button type="button" data-bs-target="#unapprovedPet<%=index%>" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
                         <% } else { %>
                               <button type="button" data-bs-target="#unapprovedPet<%=index%>" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                            <% for (let idx = 1; idx < i.pictures.length; idx++) { %>
+                            <% for (let idx = 1; idx < i.attribute.pictures.length; idx++) { %>
                                 <button type="button" data-bs-target="#unapprovedPet<%=idx%>" data-bs-slide-to="<%= idx %>" aria-label="Slide <% idx + 1 %>"></button>
                             <% }} %>
                         </div>
-                        <% if (i.pictures.length === 0) { %>
-                        <% } else if (i.pictures.length === 1) { %>
+                        <% if (i.attribute.pictures.length === 0) { %>
+                        <% } else if (i.attribute.pictures.length === 1) { %>
                             <div class="carousel-inner">
                                 <div class="carousel-item active">
-                                <img src="uploads/pet_intake/<%= i.pictures[0].filename %>" class="d-block w-100" alt="...">
+                                <img src="uploads/pet_intake/<%= i.attribute.pictures[0].filename %>" class="d-block w-100" alt="...">
                                 </div>
                             </div>
                         <% } else { %>
                             <div class="carousel-inner">
                               <div class="carousel-item active">
-                                <img src="uploads/pet_intake/<%= i.pictures[0].filename %>" class="d-block w-100" alt="...">
+                                <img src="uploads/pet_intake/<%= i.attribute.pictures[0].filename %>" class="d-block w-100" alt="...">
                               </div>
-                              <% for (let idx = 1; idx < i.pictures.length; idx++) { %>
+                              <% for (let idx = 1; idx < i.attribute.pictures.length; idx++) { %>
                                 <div class="carousel-item">
-                                  <img src="uploads/pet_intake/<%= i.pictures[idx].filename %>" class="d-block w-100" alt="...">
+                                  <img src="uploads/pet_intake/<%= i.attribute.pictures[idx].filename %>" class="d-block w-100" alt="...">
                                 </div>
                         <% }} %>
-                        <% if (i.pictures.length > 1) { %>
+                        <% if (i.attribute.pictures.length > 1) { %>
                             <button class="carousel-control-prev" type="button" data-bs-target="#unapprovedPet<%= index %>" data-bs-slide="prev">
                               <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                               <span class="visually-hidden">Previous</span>
@@ -147,6 +147,24 @@
         </section>
         <% });}} %>
     
+        <section class="bg-light mt-3">
+            <div class="container d-flex justify-content-center">
+              <nav aria-label="Page navigation example">
+                <ul class="pagination text-dark">
+                  <% if (approvedPet.previous.page > 0) { %> 
+                  <li class="page-item"><a class="page-link" href="/animals?page=<%=approvedPet.previous.page%>&limit=3">Previous</a></li>
+                  <% } else { %>
+                  <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                  <% } %> 
+                  <% if (approvedPet.next.page && (approvedPet.results.length === 3)) { %>
+                    <li class="page-item"><a class="page-link" href="/animals?page=<%=approvedPet.next.page%>&limit=3">Next</a></li>
+                  <% } else { %>
+                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                  <% } %> 
+                </ul>
+              </nav>
+            </div> 
+          </section>
     </body>
 </html>
 
