@@ -8,7 +8,6 @@ const bcrypt = require('bcrypt');
 router.post('/newUser', async (req, res) => {
     const {email} = req.body;
     let newUser = await Users.findOne({email});
-    console.log(req.body);
     if (newUser) {
         console.log("User already exists in database.");
         res.redirect('/');

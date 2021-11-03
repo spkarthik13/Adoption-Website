@@ -4,7 +4,6 @@ const router = express.Router();
 const User = require('../models/user');
 const Pet = require('../models/pet');
 const AdoptedPet = require('../models/adopted_pet');
-const { promiseImpl } = require('ejs');
 const date = new Date();
 
 function checkAdmin(req, res, next) {

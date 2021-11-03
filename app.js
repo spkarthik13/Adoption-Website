@@ -22,7 +22,8 @@ const userRoute = require('./controller/user_route');
 const petIntakeRoute = require('./controller/pet_intake_route');
 const animalsRoute = require('./controller/animals_route');
 const adoptionApprovalRoute = require('./controller/adoption_approval_route');
+const reviewRoute = require('./controller/review_route');
 
-app.use(homepageRoute, userProfileRoute, addBlogRoute, userRoute, petIntakeRoute, animalsRoute, adoptionApprovalRoute);
+app.use(homepageRoute, userProfileRoute, addBlogRoute, userRoute, petIntakeRoute, animalsRoute, adoptionApprovalRoute, reviewRoute);
 
 app.listen(process.env.PORT || 3000, () => (console.log(`Server listening on port ${process.env.PORT}.`)));

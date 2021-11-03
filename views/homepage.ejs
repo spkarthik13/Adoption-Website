@@ -131,6 +131,54 @@
         </div>
     </section>
 
+    <section class="p-5 bg-dark text-light">
+        <div class="container">
+            <div class="row align-items-center justify-content-between">
+                <div class="col-md">
+                    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                        <% if (reviews.length === 1) { %>
+                            <div class="carousel-item active">
+                                <div class="text-center my-3">
+                                    <div class="text-center my-3"><h2>Overall Review: <%= reviews[0].overallRating %></h2>⭐⭐⭐⭐⭐</div>
+                                </div>
+                                <div class="text-center my-3"><%= reviews[0].otherComments %></div>
+                            </div>
+                        <% } else { %> 
+                            <div class="carousel-item active">
+                                <div class="text-center my-3"><h2>Overall Review: <%= reviews[0].overallRating %></h2>⭐⭐⭐⭐⭐</div>
+                                <div class="text-center my-3"><%= reviews[0].otherComments %></div>
+                            </div>
+                        <% for (let i = 1; i < reviews.length; i++) { %> 
+                            <div class="carousel-item">
+                                <div class="text-center my-3"><h2>Overall Review: <%= reviews[0].overallRating %></h2>⭐⭐⭐⭐⭐</div>
+                                <div class="text-center my-3"><%= reviews[i].otherComments %></div>
+                            </div>
+                            <% } %>
+                        <% } %>
+                        </div>
+                        <button class="carousel-control-prev" type="button" hidden data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                          <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" hidden data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                          <span class="visually-hidden">Next</span>
+                        </button>
+                      </div>
+                </div>
+                <div class="col-md p-5">
+                    <h2>Our Reviews</h2>
+                    <p class="lead">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ea voluptatem repellat quaerat voluptates incidunt facere ullam pariatur, eius iusto maxime accusamus iste accusantium. Ex, voluptatem!</p>
+                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ea voluptatem repellat quaerat voluptates incidunt facere ullam pariatur, eius iusto maxime accusamus iste accusantium. Ex, voluptatem!</p>
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reviewModal">
+                        Leave a Review
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- FAQ -->
     <section class="p-5 bg-dark" id="faq">
         <h2 class="text-light text-center">Frequently Asked Questions</h2>
@@ -302,5 +350,96 @@
         </div>
     </div>
 
+    <!-- Review Modal -->
+    <div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Leave a Review</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="/reviews/post_review" method="POST">
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">
+                                <label for="overallExp">How would you rate your overall experience?</label>
+                            </div>
+                            <div class="col d-flex justify-content-between">
+                                <div class="form-check form-check-inline" name="overallExp">
+                                    <input class="form-check-input" type="radio" name="overallRating" id="inlineRadio1" value="1">
+                                    <label class="form-check-label" for="inlineRadio1">1</label>
+                                  </div>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="overallRating" id="inlineRadio2" value="2">
+                                    <label class="form-check-label" for="inlineRadio2">2</label>
+                                  </div>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="overallRating" id="inlineRadio3" value="3">
+                                    <label class="form-check-label" for="inlineRadio3">3</label>
+                                  </div>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="overallRating" id="inlineRadio4" value="4">
+                                    <label class="form-check-label" for="inlineRadio4">4</label>
+                                  </div>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="overallRating" id="inlineRadio5" value="5">
+                                    <label class="form-check-label" for="inlineRadio5">5</label>
+                                  </div>
+                            </div>
+                        </div>
+                        <div class="row my-3">
+                            <div class="col">
+                                <label for="overallExp">Would you recommend our shelter to a friend?</label>
+                            </div>
+                            <div class="col d-flex justify-content-between">
+                                <div class="form-check form-check-inline" name="recommend">
+                                    <input class="form-check-input" type="radio" name="friendRating" id="inlineRadio6" value="1">
+                                    <label class="form-check-label" for="inlineRadio6">1</label>
+                                  </div>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="friendRating" id="inlineRadio7" value="2">
+                                    <label class="form-check-label" for="inlineRadio7">2</label>
+                                  </div>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="friendRating" id="inlineRadio8" value="3">
+                                    <label class="form-check-label" for="inlineRadio8">3</label>
+                                  </div>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="friendRating" id="inlineRadio9" value="4">
+                                    <label class="form-check-label" for="inlineRadio9">4</label>
+                                  </div>
+                                  <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="friendRating" id="inlineRadio10" value="5">
+                                    <label class="form-check-label" for="inlineRadio10">5</label>
+                                  </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="my-3">
+                                <label for="exampleFormControlTextarea1" class="form-label">Please leave any other comments you'd like to make below.</label>
+                                <textarea name="otherComments" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                              </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button class="btn btn-primary" type="submit">Submit</button>
+                </form>
+                </div>
+            </div>
+    </div>
+
 </body>
 </html>
+
+<script>
+    function genStars(limit) {
+        result = ''
+        for (let num = 0; num < limit; num++){
+            result += '⭐';
+        }
+        return result;
+    }
+</script>

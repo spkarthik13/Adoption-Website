@@ -2,17 +2,17 @@
 const path = require('path');
 const express = require('express');
 const router = express.Router();
-const Users = require('../models/user');
-const Blogs = require('../models/blogs');
-const bcrypt = require('bcrypt');
+const Reviews = require('../models/review');
 
 router.get('/', async (req, res) => {
-    let homepageBlogs = await Blogs.find({}).sort({'createdAt': 'desc'});
-    if (req.session.user) {
-        res.render(path.resolve('./views/homepage.ejs'), {user: req.session.user, blogs: homepageBlogs});
-    } else {
-        res.render(path.resolve('./views/homepage.ejs'), {user: undefined, blogs: homepageBlogs});
-    }
+    await Reviews.find({}).limit(10).sort({createdAt: "desc"})
+    .then((result) => {
+        if (req.session.user) {
+            res.render(path.resolve('./views/homepage.ejs'), {user: req.session.user, reviews: result});
+        } else {
+            res.render(path.resolve('./views/homepage.ejs'), {user: undefined, reviews: result});
+        }
+    })
 });
 
 module.exports = router;
