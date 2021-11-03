@@ -9,6 +9,53 @@
     <title>User Profile</title>
 </head>
 <body class="bg-dark">
+    <% if (adoptedPet.length === 0) {} else { %>
+        <% if (user) { %>
+        <% adoptedPet.forEach((i, index) => { %>
+        <% if (index % 2 == 0) { %>
+        <section class="bg-dark p-5 text-light">
+        <% } else { %>
+        <section class="bg-light p-5 text-dark">
+        <% } %>
+            <div class="container">
+                <div class="row">
+                <div class="col">
+                    <div class="row">
+                        <div class="mb-1">Animal Information</div>
+                        <hr>
+                        <div class="col">
+                            <div class="mb-1">Name: <%=i.name%></div>
+                            <div class="mb-1">Age: <%=i.age%></div>
+                            <div class="mb-1">Gender: <%=i.gender%></div>
+                            <div class="mb-1">Species: <%=i.species%></div>
+                        </div>
+                        <div class="col-md mb-3">
+                            <div class="col mb-1">Breed: <%= i.breed %></div>
+                            <div class="col mb-1">Sterile: <%= i.sterile %></div>
+                            <div class="col mb-1">Weight: <%= i.weight %> lbs</div>
+                            <div class="col mb-1">Date Received: <%=i.intake.intakeApplyDate%></div>
+                        </div>
+                    </div>
+                    <div class="mb-4"><%=i.otherInfo%></div>
+                    <div class="row">
+                        <div class="mb-1">Facility's Recommendations</div>
+                        <hr> 
+                        <div class="col">
+                            <div class="mb-1">Household Square Feet: <%= i.adminSuggestion.sqFeet %></div>
+                            <div class="mb-1">Household Outdoor Area: <%= i.adminSuggestion.outdoor %></div>
+                        </div>
+                        <div class="col-md">
+                            <div class="col mb-1">Suitable Around Children: <%= i.adminSuggestion.children %></div>
+                            <div class="col mb-1">Fenced In Outdoor Area: <%= i.adminSuggestion.fenced %></div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div> 
+        </section>
+        <% });}} %>
+
+
     <section class="p-5 bg-light">
         <div class="container">
             <h3 class="fw-normal text-center">Below is your current user information, you may update it as you please.</h3>
@@ -18,10 +65,10 @@
                 <div class="col-md p-2">
                     <h4 class="fw-normal text-center">Personal Information</h4>
                     <ul class="list-group">
-                        <li class="list-group-item">Full Name: <input type="text" class="form-control" name="fullName" placeholder="<%= grabUser.fullName %>" disabled></li>
+                        <li class="list-group-item">Full Name: <input type="text" class="form-control" name="fullName" disabled></li>
                         <li class="list-group-item">Address: <input type="text" name="address" class="form-control"></li>
                         <li class="list-group-item">Phone Number: <input type="tel" name="phoneNumber" class="form-control"></li>
-                        <li class="list-group-item">Email: <input type="email" name="email" class="form-control" placeholder="<%= grabUser.email %>" disabled></li>
+                        <li class="list-group-item">Email: <input type="email" name="email" class="form-control" disabled></li>
                         <li class="list-group-item">Age: <input type="number" name="age" class="form-control"></li>
                     </ul>
                 </div>

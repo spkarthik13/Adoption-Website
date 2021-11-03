@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-
 const date = new Date();
 
 const intakeSchema = mongoose.Schema({
@@ -22,7 +21,7 @@ const outgoingSchema = mongoose.Schema({
     },
 })
 
-const petSchema = new Schema ({
+const adoptedPetSchema = new Schema({
     name: {
         type: String,
     },
@@ -42,7 +41,7 @@ const petSchema = new Schema ({
         type: String,
     },
     weight: {
-        type: Number,
+        type: Number,        
     },
     otherInfo: {
         type: String,
@@ -60,10 +59,13 @@ const petSchema = new Schema ({
     adminSuggestion: {
         type: Object,
     },
+    outgoing: {
+        type: Object,
+    },
     intake: {
         type: intakeSchema,
     },
 }, {timestamps: true});
 
-const Pet = mongoose.model('Pets', petSchema);
-module.exports = Pet;
+const AdoptedPet = mongoose.model('adopted_pet', adoptedPetSchema);
+module.exports = AdoptedPet;

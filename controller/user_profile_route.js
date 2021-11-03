@@ -3,6 +3,7 @@ const path = require('path');
 const express = require('express');
 const router = express.Router();
 const Users = require('../models/user');
+const AdoptedPet = require('../models/adopted_pet');
 
 checkUser = function(req, res, next) {
     if (req.session.user) {
@@ -13,10 +14,13 @@ checkUser = function(req, res, next) {
 };
 
 router.get('/userProfile/:id', checkUser, async (req, res) => {
-    const grabUser = await Users.findById({_id:req.params.id})
+    const grabUser = await Users.findById({_id: req.params.id})
     .then((result) => {
-        userImmutableProps = { fullName: result.fullName, email: result.email};
-        res.render(path.resolve('./views/user_profile.ejs'), {grabUser: userImmutableProps, user: req.session.user});
+        let filteredResult = AdoptedPet.find({'_id': { $in: result.adoptedPets}})
+        .then((result) => {
+            console.log(result);
+            res.render(path.resolve('./views/user_profile.ejs'), {adoptedPet: result, user: req.session.user});
+        })
     })
     .catch(err => {
         console.log(`Error grabbing user profile on the update page: ${err}`);

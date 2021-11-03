@@ -36,7 +36,7 @@ router.post('/pet_intake', isMember, upload.array('formFileMultiple'), (req, res
             animalSpecies, animalBreed, animalReproduction, 
             animalWeight, animalBio } = req.body;
     const newPet = new Pet({
-        attribute: { name: animalName,
+        name: animalName,
         age: animalAge,
         gender: animalGender,
         species: animalSpecies,
@@ -44,11 +44,10 @@ router.post('/pet_intake', isMember, upload.array('formFileMultiple'), (req, res
         sterile: animalReproduction,
         weight: animalWeight,
         otherInfo: animalBio,
-        pictures: req.files },
+        pictures: req.files,
         intake: {
             intakeMember: mongoose.Types.ObjectId(req.session.user._id),
         },
-        adminInfo:{},
     });
 
     newPet.save()

@@ -5,6 +5,8 @@ const path = require('path');
 const Pet = require('../models/pet');
 const fs = require('fs');
 const pageination = require('../pagination');
+const User = require('../models/user')
+const mongoose = require('mongoose');
 
 function checkUser(req, res, next) {
     if (req.session.user) {
@@ -22,29 +24,29 @@ function checkAdmin(req, res, next) {
     }
 }
 
-router.get('/animals', checkUser, pageination.paginatedFilteredResults(Pet), (req, res) => {
+router.get('/animals', checkUser, pageination.pagination(Pet, true), async (req, res) => {
     const approvedPet = res.paginatedResults;
     res.render(path.resolve('./views/animals'), {user: req.session.user, approvedPet: approvedPet,  currentURL: req.url});
-});
-
-router.get('/animals/admin_approval', checkAdmin, async (req, res) => {
-    const grabPets = Pet.find({}).sort()
-    .then(result => {
-        const unapprovedPets = new Array;
-        result.filter(pet => {
-            if (pet.adminInfo.inventoryApproved === false) {
-                unapprovedPets.unshift(pet);
-            }
-        })
-        res.render(path.resolve('./views/animals_approval'), {user: req.session.user, unapprovedPet: unapprovedPets});
-    })
-    .catch(err => {
-        console.log(`Error grabbing pets from database: ${err}`);
-        res.redirect('/animals/admin_approval');
-    })
-    
 })
 
+// router.get('/animals', checkUser, pageination.pagination(Pet, true), (req, res) => {
+//     // const approvedPet = res.paginatedResults;
+//     // console.log(approvedPet);
+//     // res.render(path.resolve('./views/animals'), {user: req.session.user, approvedPet: approvedPet,  currentURL: req.url});
+// })
+
+// Admin view to approve of incoming animals.
+router.get('/animals/admin_approval', checkAdmin, async (req, res) => {
+    const grabPets = await Pet.find({'inventoryApproved': false}).sort({createdAt: -1})
+    .then(result => {
+        res.render(path.resolve('./views/animals_approval'), {user: req.session.user, unapprovedPet: result})
+    })
+    .catch(error => {
+        console.log(`Error fetching unapproved pets from database, error: ${error}`);
+    })    
+})
+
+// Admin route to post approved animal.
 router.post('/animals/approve_animal/:id', checkAdmin, async (req, res) => {
     const {sqFtSelect, outdoorBool, childBool, fencedBool} = req.body;
     const update = {
@@ -56,10 +58,11 @@ router.post('/animals/approve_animal/:id', checkAdmin, async (req, res) => {
             fenced: fencedBool,
         }
     }
-    await Pet.findByIdAndUpdate(req.params.id, {'$set':{'adminInfo': update}});
+    await Pet.updateOne({_id: req.params.id}, update);
     res.redirect('/animals/admin_approval');
 });
 
+// Delete incoming animal application.
 router.get('/animals/delete_animal/:id', checkAdmin, async (req, res) => {
     const deleteAnimal = await Pet.findByIdAndDelete({_id: req.params.id})
     .then(result => {
@@ -80,12 +83,16 @@ router.get('/animals/delete_animal/:id', checkAdmin, async (req, res) => {
 });
 
 // Apply to adopt animal.
-router.get('/animals/apply_animal/:id', checkAdmin, async (req, res) => {
+router.get('/animals/apply_animal/:id', checkUser, async (req, res) => {
+    // By default the user will be applied.
     let doUpdate = true;
-    const grabPet = await Pet.findById({_id: req.params.id}).lean()
+
+    // Find the pet in database.
+    const grabPet = await Pet.findById({_id: req.params.id})
     .then((result) => {
+        // If the user has already applied to adopt this animal, stop the update.
         for (let i = 0; i < result.appliedMembers.length; i++) {
-            if (result.appliedMembers[i]._id.equals(req.session.user._id)) {
+            if (result.appliedMembers[i].equals(req.session.user._id)) {
                 console.log(`This user has already applied to adopt this pet.`);
                 doUpdate = false;
                 i = result.appliedMembers.length;
@@ -96,28 +103,18 @@ router.get('/animals/apply_animal/:id', checkAdmin, async (req, res) => {
     })
 
     if (doUpdate) {
-        const update = {$push: {'appliedMembers': req.session.user._id}};
-        await Pet.findByIdAndUpdate(req.params.id, update)
-        .then(() => {
-            console.log('Successfully applied user to adopt this pet.');
-        })
-        .catch((error) => {
-            console.log(`Error applying user for pet adoption: ${error}`);
-        })
+        // Pet gets user added to applied members.
+        await Pet.findByIdAndUpdate(req.params.id, {$push: {'appliedMembers': req.session.user._id}})
     }
+
+    // Redirect back to pet page.
     res.redirect('/animals?page=1&limit=3');
 });
 
 // Remove adoption application.
 router.get('/animals/remove_animal_application/:id', checkAdmin, async (req, res) => {
-    const grabPet = await Pet.findById({_id: req.params.id})
-    .then(async (result) => {
-        await Pet.findByIdAndUpdate({_id: req.params.id}, {$pull: {'appliedMembers': req.session.user._id}})
-    })
-    .catch((error) => {
-        console.log(`Error grabbing the pet in the database: ${error}`);
-    })
-
+    // Find the pet, then apply the update.
+    await Pet.findByIdAndUpdate({_id: req.params.id}, {$pull: {'appliedMembers': req.session.user._id}})
     res.redirect('/animals?page=1&limit=3');
 })
 module.exports = router;

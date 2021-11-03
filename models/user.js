@@ -41,6 +41,9 @@ const userSchema = new Schema({
     fencedArea: {
         type: String,
     },
+    adoptedPets:{
+        type: Array,    
+    },
     isAdmin: {
         type: Boolean,
         default: false,
