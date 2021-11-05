@@ -3,48 +3,66 @@ const express = require('express');
 const router = express.Router();
 const Users = require('../models/user');
 const AdoptedPet = require('../models/adopted_pet');
+const bcrypt = require('bcrypt');
 
 checkUser = function(req, res, next) {
     if (req.session.user) {
         next();
     } else {
-        res.render(path.resolve('./views/error_page'), {error: 'authError'});
+        res.redirect('*');
     }
 };
 
 router.get('/userProfile/:id', checkUser, async (req, res) => {
     const grabUser = await Users.findById({_id: req.params.id})
-    .then((result) => {
-        let filteredResult = AdoptedPet.find({'_id': { $in: result.adoptedPets}})
-        .then((result) => {
-            console.log(result);
-            res.render(path.resolve('./views/user_profile.ejs'), {adoptedPet: result, user: req.session.user});
+    if (grabUser.adoptedPets.length > 0) {
+        const grabPets = await AdoptedPet.find({'_id': { $in: result.adoptedPets}})
+        .then(() => {
+            res.render(path.resolve('./views/user_profile.ejs'), {adoptedPet: grabPets, user: req.session.user, userInfo: grabUser});
         })
-    })
-    .catch(err => {
-        console.log(`Error grabbing user profile on the update page: ${err}`);
-    });
+    } else {
+        res.render(path.resolve('./views/user_profile.ejs'), {adoptedPet: [], user: req.session.user, userInfo: grabUser});
+    }
 });
 
 // Update route.
 router.post('/userProfile/edit/:id', checkUser, async (req, res) => {
-    let User = {
-        phoneNumber: req.body.phNumber,
-        age: req.body.age,
-        address: req.body.address,
-        city: req.body.city,
-        squareFt: req.body.sqFeet,
-        children: req.body.childrenInput,
-        outdoorArea: req.body.outdoorArea,
-        fencedArea: req.body.fencedArea,
-    };
+    if (req.body.currentPw && req.body.newPw) {
+        const user = await Users.findById({_id: req.params.id})
+        if (await bcrypt.compare(req.body.currentPw, user.hashedPass)) {
+            try {
+                const salt = await bcrypt.genSalt();
+                const hashedPassword = await bcrypt.hash(req.body.newPw, salt);
+                if (req.body.phNumber) {
+                    update = {
+                        phoneNumber: req.body.phNumber,
+                        hashedPass: hashedPassword,
+                    };
+                } else {
+                    update = {
+                        hashedPass: hashedPassword,
+                    };
+                }
+                await Users.findByIdAndUpdate({_id:req.params.id}, update)
+            } catch {
+                console.log('Error creating hashed password.');
+            }
+        } else {
+            console.log('Wrong password.');
+        }
+    } else {
+        update = {
+            phoneNumber: req.body.phNumber,
+        };
+        await Users.findByIdAndUpdate({_id:req.params.id}, update)
+        .then((result) => {
+            res.redirect('/');
+        })
+        .catch((error) => {
+            console.log(`Error updating user: ${error}`);
+        })
+    }
 
-    await Users.findByIdAndUpdate({_id:req.params.id}, User)
-    .then((result) => {
-        res.redirect('/');
-    })
-    .catch((error) => {
-        console.log(`Error updating user: ${error}`);
-    })
+    res.redirect('/userProfile/' + req.params.id);
 });
 module.exports = router;

@@ -11,7 +11,7 @@ function checkUser(req, res, next) {
     if (req.session.user) {
         next();
     } else {
-        res.redirect('/');
+        res.redirect('*');
     }
 }
 
@@ -19,7 +19,7 @@ function checkAdmin(req, res, next) {
     if (req.session.user && req.session.user.isAdmin) {
         next();
     } else {
-        res.redirect('/animals?page=1&limit=3');
+        res.redirect('*');
     }
 }
 
@@ -28,13 +28,6 @@ router.get('/animals', checkUser, pageination.pagination(Pet, true), async (req,
     res.render(path.resolve('./views/animals'), {user: req.session.user, approvedPet: approvedPet,  currentURL: req.url});
 })
 
-// router.get('/animals', checkUser, pageination.pagination(Pet, true), (req, res) => {
-//     // const approvedPet = res.paginatedResults;
-//     // console.log(approvedPet);
-//     // res.render(path.resolve('./views/animals'), {user: req.session.user, approvedPet: approvedPet,  currentURL: req.url});
-// })
-
-// Admin view to approve of incoming animals.
 router.get('/animals/admin_approval', checkAdmin, async (req, res) => {
     const grabPets = await Pet.find({'inventoryApproved': false}).sort({createdAt: -1})
     .then(result => {
@@ -111,9 +104,10 @@ router.get('/animals/apply_animal/:id', checkUser, async (req, res) => {
 });
 
 // Remove adoption application.
-router.get('/animals/remove_animal_application/:id', checkAdmin, async (req, res) => {
+router.get('/animals/remove_animal_application/:id', checkUser, async (req, res) => {
     // Find the pet, then apply the update.
     await Pet.findByIdAndUpdate({_id: req.params.id}, {$pull: {'appliedMembers': req.session.user._id}})
     res.redirect('/animals?page=1&limit=3');
 })
+
 module.exports = router;

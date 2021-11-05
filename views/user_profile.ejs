@@ -5,7 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/userProfileStyle.css">
-    
     <title>User Profile</title>
 </head>
 <body class="bg-dark">
@@ -62,50 +61,26 @@
         <div class="container">
             <h3 class="fw-normal text-center">Below is your current user information, you may update it as you please.</h3>
             <hr>
+            <div class="fw-normal fs-4 text-center">Personal Information</div>
             <form action="/userProfile/edit/<%= user._id %>" method="post">
-            <div class="row">
-                <div class="col-md p-2">
-                    <h4 class="fw-normal text-center">Personal Information</h4>
-                    <ul class="list-group">
-                        <li class="list-group-item">Full Name: <input type="text" class="form-control" name="fullName" disabled></li>
-                        <li class="list-group-item">Address: <input type="text" name="address" class="form-control"></li>
-                        <li class="list-group-item">Phone Number: <input type="tel" name="phoneNumber" class="form-control"></li>
-                        <li class="list-group-item">Email: <input type="email" name="email" class="form-control" disabled></li>
-                        <li class="list-group-item">Age: <input type="number" name="age" class="form-control"></li>
-                    </ul>
-                </div>
-                <div class="col-md p-2">
-                    <h4 class="fw-normal text-center">Home Information</h4>
-                    <ul class="list-group bg-dark">
-                        <li class="list-group-item">City: <input type="text" name="city" class="form-control"></li>
-                        <li class="list-group-item">Sq Feet: <input type="number" name="sqFeet" class="form-control"></li>
-                        <li class="list-group-item">Children: <select class="form-select" name="children" aria-label="Default select example">
-                            <option selected></option>
-                            <option value="True">Yes</option>
-                            <option value="False">No</option>
-                          </select>
-                        </li>
-                        <li class="list-group-item">Outdoor Area:<select class="form-select" id="outdoorAreaUP" name="outdoorArea" onchange="outdoorBoolUP()" aria-label="Default select example">
-                            <option selected></option>
-                            <option value="True">Yes</option>
-                            <option value="False">No</option>
-                          </select>
-                        </li>
-                        <li class="list-group-item">Fenced In?
-                            <select class="form-select" id="fencedAreaUP" name="fencedArea" aria-label="Default select example" disabled>
-                                <option selected>No</option>
-                                <option value="True">Yes</option>
-                                <option value="False">No</option>
-                              </select>
-                        </li>
-                    </ul>
-                </div>
+            <div class='d-flex justify-content-center'>
+                <ul class="list-group w-50">
+                    <li class="list-group-item">Email: <input type="email" name="email" class="form-control" value='<%= userInfo.email %>' disabled></li>
+                    <li class="list-group-item">Full Name: <input type="text" class="form-control" name="fullName" value='<%= userInfo.fullName %>' disabled></li>
+                    <li class="list-group-item">Phone Number: <input type="tel" name="phNumber" class="form-control"></li>
+                    <li class="list-group-item">
+                        <div class="text-center fs-4">Password Update</div>
+                        Current Password: 
+                        <input type="tel" name="currentPw" class="form-control my-1">
+                        New Password: 
+                        <input type="tel" name="newPw" class="form-control my-1"></li>
+                    <div class="d-grid gap-2 my-3">
+                        <button class="btn btn-primary" type="submit">Button</button>
+                    </div>
+                </ul>
             </div>
         </div>
-        <div class="row-12 text-center">
-            <button class="btn btn-primary w-50" type="submit">Submit</button>
-        </div>
-    </form>
+        </form>
     </section>
 </body>
 </html>

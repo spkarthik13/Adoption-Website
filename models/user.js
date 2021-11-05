@@ -18,27 +18,6 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
-    address: {
-        type: String,
-    },
-    age: {
-        type:Number,
-    },
-    city: {
-        type:String,
-    },
-    squareFt: {
-        type: Number,
-    },
-    children: {
-        type: String,
-    },
-    outdoorArea: {
-        type: String,
-    },
-    fencedArea: {
-        type: String,
-    },
     adoptedPets:{
         type: Array,    
     },

@@ -6,11 +6,11 @@ const multer = require('multer');
 const nanoid = require('nanoid');
 const mongoose = require('mongoose');
 
-isMember = function(req, res, next) {
+let checkUser = function(req, res, next) {
     if (req.session.user) {
         next();
     } else {
-        res.redirect('/');
+        res.redirect('*');
     }
 }
 
@@ -30,7 +30,7 @@ const upload = multer({
     storage:storage,
 });
 
-router.post('/pet_intake', isMember, upload.array('formFileMultiple'), (req, res) => {
+router.post('/pet_intake', checkUser, upload.array('formFileMultiple'), (req, res) => {
     const { animalName, animalAge, animalGender, 
             animalSpecies, animalBreed, animalReproduction, 
             animalWeight, animalBio } = req.body;

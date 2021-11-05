@@ -14,19 +14,11 @@ router.post('/newUser', async (req, res) => {
         try {
             const salt = await bcrypt.genSalt();
             const hashedPassword = await bcrypt.hash(req.body.password, salt);
-            console.log(salt, hashedPassword);
             newUser = new Users({
                 fullName: req.body.fullName,
                 email: req.body.email,
                 phoneNumber: req.body.phNumber,
                 hashedPass: hashedPassword,
-                age: req.body.age,
-                address: req.body.address,
-                city: req.body.cityInput,
-                squareFt: req.body.sqFootInput,
-                children: req.body.childrenInput,
-                outdoorArea: req.body.outdoorArea,
-                fencedArea: req.body.fencedArea,
             });
         } catch {
             console.log('Error creating hashed password.');
@@ -43,20 +35,22 @@ router.post('/newUser', async (req, res) => {
 
 router.post('/loginUser', async (req, res) => {
     const {email, password} = req.body;
-    const User = await Users.findOne({email});
-    if (User === null) {
-        res.render(path.resolve('./views/error_page.ejs'), {error: 'loginError'});
-    } else {
-        let comparedPass = await bcrypt.compare(password, User.hashedPass);
-        if (comparedPass) {
-            console.log(`User ${User.fullName} has successfully logged in.`);
-            req.session.user = {fullName: User.fullName, _id: User._id, isAdmin: User.isAdmin};
-            console.log(req.session.user);
-            res.redirect('/');
-    } else {
-        res.render(path.resolve('./views/error_page.ejs'), {error: 'loginError'});
+    const user = await Users.findOne({email: email});
+    if (user === null) {
+        console.log("User doesn't exist.");
     }
-}});
+    await bcrypt.compare(password, user.hashedPass)
+    .then((result) => {
+        if (result) {
+        console.log(`User ${user.fullName} has successfully logged in.`);
+        req.session.user = {fullName: user.fullName, _id: user._id, isAdmin: user.isAdmin};
+        res.redirect('/');
+        } else {
+            res.redirect('/');
+        }
+    })
+    .catch((error) => console.log(`Error comparing password: ${error}`))
+});
 
 router.get('/logout', (req, res) => {
     req.session.destroy(err => {

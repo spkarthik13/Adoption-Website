@@ -3,13 +3,20 @@ const router = express.Router();
 const User = require('../models/user');
 const Pet = require('../models/pet');
 const AdoptedPet = require('../models/adopted_pet');
-const date = new Date();
 
-function checkAdmin(req, res, next) {
-    if (req.session.user.isAdmin) {
+function checkUser(req, res, next) {
+    if (req.session.user) {
         next();
     } else {
-        res.redirect('/');
+        res.redirect('*');
+    }
+}
+
+function checkAdmin(req, res, next) {
+    if (req.session.user && req.session.user.isAdmin) {
+        next();
+    } else {
+        res.redirect('*');
     }
 }
 
@@ -25,7 +32,7 @@ router.get('/animals/adoption_approval', checkAdmin, async (req, res) => {
     res.render('../views/adoption_approval.ejs', {user: req.session.user, pet: appliedPets, applicants: applicantArray})
 })
 
-router.post('/animals/adoption_approval/:id', checkAdmin, async (req, res) => {
+router.post('/animals/adoption_approval/:id', async (req, res) => {
     const grabPet = await Pet.findOne({_id: req.params.id})
     .then(doc => {
         AdoptedPet.insertMany(doc)

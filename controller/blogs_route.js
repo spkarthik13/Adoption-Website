@@ -11,7 +11,7 @@ let checkAdmin = function(req, res, next) {
     if (req.session.user.isAdmin) {
         next();
     } else {
-        res.redirect('/');
+        res.redirect('*');
     }
 }
 
